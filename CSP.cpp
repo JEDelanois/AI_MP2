@@ -7,3 +7,13 @@
 //
 
 #include "CSP.h"
+
+vector<string>&  DataBase::operator[] (const string nString)
+{
+    return data[hash(nString)];
+}
+
+int DataBase::hash(string s)
+{
+    
+}

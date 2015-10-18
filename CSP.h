@@ -9,6 +9,38 @@
 #ifndef __AI_MP2__CSP__
 #define __AI_MP2__CSP__
 
-#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+
+
+class Category
+{
+public:
+        
+private:
+
+};
+
+
+class DataBase
+{
+public:
+    
+    vector<string>& operator[] (const string nString);
+    
+    
+private:
+    vector< vector<string> > data;
+    
+    // returns hash value of the coresponding
+    int hash(string s);
+    
+};
+
 
 #endif /* defined(__AI_MP2__CSP__) */
