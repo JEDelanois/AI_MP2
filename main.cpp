@@ -7,9 +7,11 @@
 //
 
 #include <iostream>
+#include "CSP.h"
+#include "WarGame.h"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    DataBase temp;
+    
     return 0;
 }

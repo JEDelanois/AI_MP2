@@ -17,3 +17,19 @@ int DataBase::hash(string s)
 {
     
 }
+
+DataBase::DataBase()
+{
+    ifstream curr;
+    string temp;
+    
+    data.resize(50);
+    curr.open("wordlists/adjective.txt");
+    
+    while(!curr.eof() )
+    {
+        curr >> temp;
+        data[hash("adjective")].push_back(temp);
+    }
+    
+}

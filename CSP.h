@@ -30,7 +30,10 @@ private:
 class DataBase
 {
 public:
+    //loads in all data
+    DataBase();
     
+    //overloaded assignment[]
     vector<string>& operator[] (const string nString);
     
     
