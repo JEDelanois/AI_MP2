@@ -2,7 +2,7 @@
 //  main.cpp
 //  AI_MP2
 //
-//  Created by Erik on 10/18/15.
+//  Created by Erik and Dallas.
 //  Copyright (c) 2015 Erik. All rights reserved.
 //
 
@@ -13,3 +13,5 @@ int main(int argc, const char * argv[]) {
     std::cout << "Hello, World!\n";
     return 0;
 }
+
+
