@@ -33,16 +33,21 @@ public:
     //loads in all data
     DataBase(string path);
     
+    int size(){return data.size();}
+    
     //overloaded assignment[]
     vector<string>& operator[] (const string nString);
     
     string printAll();
+    vector<string> CatNames;
+    
     
 private:
     vector< vector<string> > data;
     
     // returns hash value of the coresponding
     int hash(string s);
+    
     
 };
 
