@@ -7,6 +7,7 @@
 //
 
 #include "CSP.h"
+#include "string.h"
 
 vector<string>&  DataBase::operator[] (const string nString)
 {
@@ -77,3 +78,60 @@ int DataBase::hash(string s)
 		return 29;
 
 }
+
+{
+
+	solIdx = 0;
+	numWords = scan file
+	int i = 0;
+	idx0 = scan file	//get all indexes for every word here
+		idx1 = scan file
+		idx2 = scan file
+		//add rest of indexes here
+
+		
+	for (int i = 0; j < dictionary[category].length(); i++)
+	{
+			//if not out of words
+			word = dictionary[category][i];
+			solution[solIdx][idx0 - 1] = word[0];
+			solution[solIdx][idx1 - 1] = word[1];
+			solution[solIdx][idx2 - 1] = word[2];
+
+	
+			
+			for (int j = 0; j < dictionary->category.length(); j++) //iterate through each word of specified category
+			{
+				idx0 = scan file
+					idx1 = scan file
+					idx2 = scan file
+					word = dictionary->category[j];	//get next word from category
+
+				//if letter in solution vector is not the same letter as the word
+				if (solution[solIdx][idx0 - 1] != NULL && word[0] != solution[solIdx][idx0 - 1])
+					continue; //go through next iteration (next word)
+				else if (solution[idx0 - 1] == NULL)
+					solution[solIdx][idx0 - 1] = word[0];
+
+				if (solution[solIdx][idx1 - 1] != NULL && word[1] != solution[solIdx][idx1 - 1])
+					continue; //go through next iteration (next word)
+				else if (solution[idx1 - 1] == NULL)
+					solution[solIdx][idx1 - 1] = word[1];
+
+				if (solution[solIdx][idx2 - 1] != NULL && word[2] != solution[solIdx][idx2 - 1])
+					continue; //go through next iteration (next word)
+				else if (solution[solIdx][idx2 - 1] == NULL)
+					solution[solIdx][idx2 - 1] = word[2];
+
+			}
+		
+			
+	}
+
+	if (solIdx == 0)
+		solution[0] = "no solution";
+	return solution;
+}
+
+
+
