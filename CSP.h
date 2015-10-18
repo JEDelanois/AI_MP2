@@ -31,11 +31,12 @@ class DataBase
 {
 public:
     //loads in all data
-    DataBase();
+    DataBase(string path);
     
     //overloaded assignment[]
     vector<string>& operator[] (const string nString);
     
+    string printAll();
     
 private:
     vector< vector<string> > data;

@@ -7,6 +7,12 @@
 //
 
 #include "CSP.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+
+using namespace std;
 
 vector<string>&  DataBase::operator[] (const string nString)
 {
@@ -77,18 +83,32 @@ int DataBase::hash(string s)
         return 29;
 }
 
-DataBase::DataBase()
+DataBase::DataBase(string path)
 {
     ifstream curr;
     string temp;
-    
+
     data.resize(50);
-    curr.open("wordlists/adjective.txt");
+    curr.open(path + "adjective.txt");
     
     while(!curr.eof() )
     {
-        curr >> temp;
+        getline(curr,temp);
         data[hash("adjective")].push_back(temp);
     }
     
+}
+
+
+string DataBase::printAll()
+{
+    string s;
+    
+    for(int i = 0; i< data[0].size(); i++)
+    {
+        s+=data[0][i];
+    }
+    
+    
+    return s;
 }
