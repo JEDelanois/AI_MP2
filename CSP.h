@@ -16,23 +16,14 @@
 
 using namespace std;
 
-
-
-class Category
-{
-public:
-        
-private:
-
-};
-
-
 class DataBase
 {
 public:
     //loads in all data
+    DataBase(){};
     DataBase(string path);
-    
+    void Init(string path);
+
     int size(){return data.size();}
     
     //overloaded assignment[]
@@ -51,5 +42,47 @@ private:
     
 };
 
+class CategoryDef
+{
+public:
+    string ctgyName;
+    
+    int idxs[3];
+    
+    void print();
+    
+private:
+    
+};
+
+
+class Parameters
+{
+public:
+    
+    Parameters(string probpath, string datapath);
+    
+    CategoryDef probDef;
+    char * sol;
+    
+    DataBase data;
+    
+    vector<CategoryDef> ctgrs;
+    
+    void print();
+    
+private:
+    int solLength;
+    
+};
+
 
 #endif /* defined(__AI_MP2__CSP__) */
+
+
+
+
+
+
+
+
