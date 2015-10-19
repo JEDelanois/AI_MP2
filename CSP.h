@@ -70,7 +70,6 @@ public:
     vector<CategoryDef> ctgrs;
     
     void print();
-    
 private:
     int solLength;
     

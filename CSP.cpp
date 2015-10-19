@@ -134,6 +134,7 @@ Parameters::Parameters(string probpath, string datapath)
     //assign all data
     data.Init(datapath);
     ifstream infile;
+    infile.open(probpath);
     
     if(!infile.eof())
     {
@@ -141,24 +142,31 @@ Parameters::Parameters(string probpath, string datapath)
         infile >> solLength;
         sol = new char [solLength];
         
-        while(infile)
+        while(!infile.eof())
         {
-            //make new node
-            ctgrs.push_back(CategoryDef());
             
             string temp;
             int itemp;
             
             infile >> temp;
+            if(temp == "")
+                break;
+            temp.pop_back();
+            
+            //make new node
+            ctgrs.push_back(CategoryDef());
+            
             ctgrs[ctgrs.size() -1 ].ctgyName = temp;
             
             infile >> itemp;
             ctgrs[ctgrs.size() -1 ].idxs[0] = itemp;
             
+            infile >> temp;
             
             infile >> itemp;
             ctgrs[ctgrs.size() -1 ].idxs[1] = itemp;
             
+            infile >> temp;
             
             infile >> itemp;
             ctgrs[ctgrs.size() -1 ].idxs[2] = itemp;
