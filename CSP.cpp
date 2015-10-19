@@ -131,16 +131,20 @@ void CategoryDef::print()
 
 Parameters::Parameters(string probpath, string datapath)
 {
-    //assign all data
+    Init(probpath, datapath);
+}
+void Parameters::Init(string probpath, string datapath)
+{
+    //assign all data and reset what might have already been there
     data.Init(datapath);
     ifstream infile;
     infile.open(probpath);
+    ctgrs.resize(0);
     
     if(!infile.eof())
     {
         //get length of the solution
         infile >> solLength;
-        sol = new char [solLength];
         
         while(!infile.eof())
         {
@@ -159,17 +163,17 @@ Parameters::Parameters(string probpath, string datapath)
             ctgrs[ctgrs.size() -1 ].ctgyName = temp;
             
             infile >> itemp;
-            ctgrs[ctgrs.size() -1 ].idxs[0] = itemp;
+            ctgrs[ctgrs.size() -1 ].idxs[0] = itemp-1;
             
             infile >> temp;
             
             infile >> itemp;
-            ctgrs[ctgrs.size() -1 ].idxs[1] = itemp;
+            ctgrs[ctgrs.size() -1 ].idxs[1] = itemp-1;
             
             infile >> temp;
             
             infile >> itemp;
-            ctgrs[ctgrs.size() -1 ].idxs[2] = itemp;
+            ctgrs[ctgrs.size() -1 ].idxs[2] = itemp-1;
             
             
             
@@ -193,6 +197,112 @@ void Parameters::print()
 }
 
 
+CSTworld::CSTworld(string probpath, string datapath)
+{
+    parameters.Init(probpath,datapath);
+}
+
+
+void CSTworld::WordSearch()
+{
+    //make a string of the solution lenght and set tonull
+    string s = "";
+    s.resize(parameters.solLength);
+    for(int i = 0 ; i < parameters.solLength; i++)
+        s[i] = ' ';
+    
+    cout << "Search Order: ";
+    for(int i = 0; i < parameters.ctgrs.size(); i++)
+    {
+        cout << parameters.ctgrs[i].ctgyName;
+        if(i < parameters.ctgrs.size() -1)
+            cout << "->";
+    }
+    cout << endl;
+    
+    wordsearch(s,-1);
+}
+
+void CSTworld::wordsearch(string currS,int ctgryIndx)
+{
+    //error check
+    
+    if (ctgryIndx + 1 >= parameters.ctgrs.size() )
+    {
+        cout << "(found result: " << currS << ")" << endl;
+        return;
+    }
+    
+    
+    //root check
+    if(ctgryIndx == -1 )
+        cout << "root" ;
+
+    string tabs = "";
+    //get number of tabs needed
+    for(int a = 0; a < ctgryIndx + 2; a++)
+        tabs += "\t";
+    
+    
+    int flag = 1;
+    //try to fit in words of next category
+        // current list of words in category
+    vector<string> * curList = &parameters.data[parameters.ctgrs[ctgryIndx+1].ctgyName];
+    for(int i = 0; i < curList->size(); i++)
+    {
+        //copy over string to pass along
+        string temp(currS);
+
+        //if the character is null fill it in
+        if(temp[parameters.ctgrs[ctgryIndx +1].idxs[0]] == ' ' )
+        {
+            int as =parameters.ctgrs[ctgryIndx +1].idxs[0];
+            //place coresponding character in
+            temp[as] = (*curList)[i][0];
+        }
+        //there is a character present so if its not the same then continue
+        else if(temp[parameters.ctgrs[ctgryIndx +1].idxs[0]] != (*curList)[i][0])
+        {
+            continue;
+        }
+        
+        //if the character is null fill it in
+        if(temp[parameters.ctgrs[ctgryIndx +1].idxs[1]] == ' ' )
+        {
+            //place coresponding character in
+            temp[parameters.ctgrs[ctgryIndx +1].idxs[1]] = (*curList)[i][1];
+        }
+        //there is a character present so if its not the same then continue
+        else if(temp[parameters.ctgrs[ctgryIndx +1].idxs[1]] != (*curList)[i][1])
+        {
+            continue;
+        }
+
+        
+        //if the character is null fill it in
+        if(temp[parameters.ctgrs[ctgryIndx +1].idxs[2]] == ' ' )
+        {
+            //place coresponding character in
+            temp[parameters.ctgrs[ctgryIndx +1].idxs[2]] = (*curList)[i][2];
+        }
+        //there is a character present so if its not the same then continue
+        else if(temp[parameters.ctgrs[ctgryIndx +1].idxs[2]] != (*curList)[i][2])
+        {
+            continue;
+        }
+        
+        
+        //if code gets here then next word is succesfully placed in here so call on current word
+        flag = 0;
+        cout<<endl << tabs << "-> " << (*curList)[i] << "\t" ;
+        wordsearch(temp, ctgryIndx +1);
+        
+    }
+    
+    if(flag == 1)
+        cout << "BackTrack";
+    
+}
 
 
 
