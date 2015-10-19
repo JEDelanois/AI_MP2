@@ -238,10 +238,13 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
     if(ctgryIndx == -1 )
         cout << "root" ;
 
+    string tabs = "";
+    //get number of tabs needed
+    for(int a = 0; a < ctgryIndx + 2; a++)
+        tabs += "\t";
     
-    //if null count is not zero that means add next word
-    cout << " -> ";
     
+    int flag = 1;
     //try to fit in words of next category
         // current list of words in category
     vector<string> * curList = &parameters.data[parameters.ctgrs[ctgryIndx+1].ctgyName];
@@ -288,10 +291,16 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
             continue;
         }
         
+        
         //if code gets here then next word is succesfully placed in here so call on current word
+        flag = 0;
+        cout<<endl << tabs << "-> " << (*curList)[i] << "\t" ;
         wordsearch(temp, ctgryIndx +1);
         
     }
+    
+    if(flag == 1)
+        cout << "BackTrack";
     
 }
 
