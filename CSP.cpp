@@ -31,10 +31,19 @@ int DataBase::hash(string s)
     return i;
 }
 
+
 DataBase::DataBase(string path)
+{
+    Init(path);
+}
+
+void DataBase::Init(string path)
 {
     string temp;
    
+    //clear all stuff incase of a reassignment
+    CatNames.resize(0);
+    data.resize(0);
    
     CatNames.push_back("animal");
     CatNames.push_back("color");
@@ -114,5 +123,70 @@ string DataBase::printAll()
     
     return s;
 }
+
+void CategoryDef::print()
+{
+    cout <<  "Category: " << ctgyName << " " << idxs[0] << " " << idxs[1] << " " << idxs[2] << endl;
+}
+
+Parameters::Parameters(string probpath, string datapath)
+{
+    //assign all data
+    data.Init(datapath);
+    ifstream infile;
+    
+    if(!infile.eof())
+    {
+        //get length of the solution
+        infile >> solLength;
+        sol = new char [solLength];
+        
+        while(infile)
+        {
+            //make new node
+            ctgrs.push_back(CategoryDef());
+            
+            string temp;
+            int itemp;
+            
+            infile >> temp;
+            ctgrs[ctgrs.size() -1 ].ctgyName = temp;
+            
+            infile >> itemp;
+            ctgrs[ctgrs.size() -1 ].idxs[0] = itemp;
+            
+            
+            infile >> itemp;
+            ctgrs[ctgrs.size() -1 ].idxs[1] = itemp;
+            
+            
+            infile >> itemp;
+            ctgrs[ctgrs.size() -1 ].idxs[2] = itemp;
+            
+            
+            
+        }
+        
+        infile.close();
+    
+    }
+    
+    
+}
+
+void Parameters::print()
+{
+    cout << "Here is the list of Parameters" << endl;
+    for(int i = 0; i < ctgrs.size(); i++)
+    {
+        ctgrs[i].print();
+    }
+    cout << endl;
+}
+
+
+
+
+
 
 
