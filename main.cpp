@@ -7,9 +7,15 @@
 //
 
 #include <iostream>
+#include "CSP.h"
+#include "WarGame.h"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    DataBase temp("/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+    
+    
+    
+    
+    
     return 0;
 }

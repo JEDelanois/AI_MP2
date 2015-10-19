@@ -7,7 +7,13 @@
 //
 
 #include "CSP.h"
-#include "string.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+#include <dirent.h>
+
+using namespace std;
 
 vector<string>&  DataBase::operator[] (const string nString)
 {
@@ -16,122 +22,97 @@ vector<string>&  DataBase::operator[] (const string nString)
 
 int DataBase::hash(string s)
 {
-	if (s == "adjective")
-		return 0;
-	if (s == "adverb")
-		return 1;
-	if (s == "animal")
-		return 2;
-	if (s == "body")
-		return 3;
-	if (s == "clothing")
-		return 4;
-	if (s == "color")
-		return 5;
-	if (s == "computer")
-		return 6;
-	if (s == "conjunction")
-		return 7;
-	if (s == "container")
-		return 8;
-	if (s == "emotion")
-		return 9;
-	if (s == "family")
-		return 10;
-	if (s == "food")
-		return 11;
-	if (s == "furniture")
-		return 12;
-	if (s == "game")
-		return 13;
-	if (s == "health")
-		return 14;
-	if (s == "interjection")
-		return 15;
-	if (s == "job")
-		return 16;
-	if (s == "kitchen")
-		return 17;
-	if (s == "language")
-		return 18;
-	if (s == "math")
-		return 19;
-	if (s == "money")
-		return 20;
-	if (s == "music")
-		return 21;
-	if (s == "nature")
-		return 22;
-	if (s == "noun")
-		return 23;
-	if (s == "number")
-		return 24;
-	if (s == "palindrome")
-		return 25;
-	if (s == "pronoun")
-		return 26;
-	if (s == "shape")
-		return 27;
-	if (s == "transportation")
-		return 28;
-	if (s == "verb")
-		return 29;
-
+    int i;
+    for( i = 0; i < CatNames.size(); i++)
+    {
+        if(s == CatNames[i])
+            break;
+    }
+    return i;
 }
 
+DataBase::DataBase(string path)
 {
-
-	solIdx = 0;
-	numWords = scan file
-	int i = 0;
-	idx0 = scan file	//get all indexes for every word here
-		idx1 = scan file
-		idx2 = scan file
-		//add rest of indexes here
-
-		
-	for (int i = 0; j < dictionary[category].length(); i++)
-	{
-			//if not out of words
-			word = dictionary[category][i];
-			solution[solIdx][idx0 - 1] = word[0];
-			solution[solIdx][idx1 - 1] = word[1];
-			solution[solIdx][idx2 - 1] = word[2];
-
-	
-			
-			for (int j = 0; j < dictionary->category.length(); j++) //iterate through each word of specified category
-			{
-				idx0 = scan file
-					idx1 = scan file
-					idx2 = scan file
-					word = dictionary->category[j];	//get next word from category
-
-				//if letter in solution vector is not the same letter as the word
-				if (solution[solIdx][idx0 - 1] != NULL && word[0] != solution[solIdx][idx0 - 1])
-					continue; //go through next iteration (next word)
-				else if (solution[idx0 - 1] == NULL)
-					solution[solIdx][idx0 - 1] = word[0];
-
-				if (solution[solIdx][idx1 - 1] != NULL && word[1] != solution[solIdx][idx1 - 1])
-					continue; //go through next iteration (next word)
-				else if (solution[idx1 - 1] == NULL)
-					solution[solIdx][idx1 - 1] = word[1];
-
-				if (solution[solIdx][idx2 - 1] != NULL && word[2] != solution[solIdx][idx2 - 1])
-					continue; //go through next iteration (next word)
-				else if (solution[solIdx][idx2 - 1] == NULL)
-					solution[solIdx][idx2 - 1] = word[2];
-
-			}
-		
-			
-	}
-
-	if (solIdx == 0)
-		solution[0] = "no solution";
-	return solution;
+    string temp;
+   
+   
+    CatNames.push_back("animal");
+    CatNames.push_back("color");
+    CatNames.push_back("computer");
+    CatNames.push_back("noun");
+    CatNames.push_back("verb");
+    CatNames.push_back("transportation");
+    CatNames.push_back("food");
+    CatNames.push_back("furniture");
+    CatNames.push_back("game");
+    CatNames.push_back("clothing");
+    CatNames.push_back("music");
+    CatNames.push_back("kitchen");
+    CatNames.push_back("nature");
+    CatNames.push_back("math");
+    CatNames.push_back("job");
+    CatNames.push_back("health");
+    CatNames.push_back("adverb");
+    CatNames.push_back("container");
+    CatNames.push_back("number");
+    CatNames.push_back("language");
+    CatNames.push_back("emotion");
+    CatNames.push_back("palindrome");
+    CatNames.push_back("body");
+    CatNames.push_back("family");
+    CatNames.push_back("conjunction");
+    CatNames.push_back("shape");
+    CatNames.push_back("pronoun");
+    CatNames.push_back("money");
+    CatNames.push_back("interjection");
+    CatNames.push_back("adjective");
+    
+    //make the array size match the size of the numbe of categorys
+    // so that all indexes match up with the hash function this is needed!!
+    data.resize(CatNames.size());
+    
+    for(int i = 0; i < CatNames.size() ; i++)
+    {
+        string a = CatNames[i];
+        ifstream curr;
+        curr.open(path + CatNames[i] + ".txt");
+        if(curr.is_open())
+        {
+            while(!curr.eof() )
+            {
+                curr >> temp;
+                data[hash(CatNames[i])].push_back(temp);
+            }
+            
+            curr.close();
+            curr.clear();
+        }
+        
+        else
+        {
+            cout << "Error opening file: " << CatNames[i] << endl;
+        }
+        curr.clear();
+    }
+   
+    
 }
 
+
+string DataBase::printAll()
+{
+    string s;
+    for(int a = 0; a < data.size(); a++)
+    {
+        s += CatNames[a] + " _____________________\n";
+        for(int i = 0; i< data[a].size(); i++)
+        {
+            s+= data[a][i] + "\n";
+        }
+    }
+    
+    
+    return s;
+}
 
 
