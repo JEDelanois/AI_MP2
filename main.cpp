@@ -11,10 +11,12 @@
 #include "WarGame.h"
 
 int main(int argc, const char * argv[]) {
-    DataBase temp("/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+    Parameters temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
     
     
+    cout << temp.data.printAll() << endl << endl;
     
+    temp.print();
     
     
     return 0;
