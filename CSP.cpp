@@ -227,30 +227,17 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
 {
     //error check
     
-    if (ctgryIndx >= (int)currS.size())
-    {
-        return;
-    }
-    
-    int nullCount = 0;
-    for(int i = 0; i < currS.size() ; i++)
-    {
-        if(currS[i] == ' ')
-        {
-            nullCount++;
-        }
-    }
-    
-    //root check
-    if(nullCount == currS.size() )
-        cout << "root" ;
-    
-    //if no null characters then you are at a solution
-    if(nullCount == 0)
+    if (ctgryIndx + 1 >= parameters.ctgrs.size() )
     {
         cout << "(found result: " << currS << ")" << endl;
         return;
     }
+    
+    
+    //root check
+    if(ctgryIndx == -1 )
+        cout << "root" ;
+
     
     //if null count is not zero that means add next word
     cout << " -> ";
