@@ -20,7 +20,7 @@ class DataBase
 {
 public:
     //loads in all data
-    DataBase(){};
+    DataBase(){}
     DataBase(string path);
     void Init(string path);
 
@@ -59,19 +59,31 @@ private:
 class Parameters
 {
 public:
-    
+    Parameters(){}
     Parameters(string probpath, string datapath);
-    
-    CategoryDef probDef;
-    char * sol;
+    void Init(string probpath, string datapath);
     
     DataBase data;
     
     vector<CategoryDef> ctgrs;
     
     void print();
-private:
     int solLength;
+    
+private:
+    
+};
+
+
+class CSTworld
+{
+public:
+    CSTworld(string probpath, string datapath);
+    Parameters parameters;
+    void WordSearch();
+    
+private:
+    void wordsearch(string currS,int ctgryIndx);
     
 };
 

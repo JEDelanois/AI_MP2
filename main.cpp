@@ -11,13 +11,16 @@
 #include "WarGame.h"
 
 int main(int argc, const char * argv[]) {
-    Parameters temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+    CSTworld temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
     
     
-    cout << temp.data.printAll() << endl << endl;
+    cout << temp.parameters.data.printAll() << endl << endl;
     
-    temp.print();
+    temp.parameters.print();
     
+    cout << endl <<endl << endl;
+    
+    temp.WordSearch();
     
     return 0;
 }
