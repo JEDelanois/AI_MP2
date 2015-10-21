@@ -218,7 +218,7 @@ void CSTworld::WordSearch()
         if(i < parameters.ctgrs.size() -1)
             cout << "->";
     }
-    cout << endl;
+    cout << endl << endl;
     
     wordsearch(s,-1);
 }
@@ -229,7 +229,13 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
     
     if (ctgryIndx + 1 >= parameters.ctgrs.size() )
     {
-        cout << "(found result: " << currS << ")" << endl;
+        string tabs = "";
+        
+        //get number of tabs needed
+        for(int a = 0; a < ctgryIndx + 2; a++)
+            tabs += "\t";
+        
+        cout << "(found result: " << currS << ")" << endl << tabs;
         return;
     }
     
@@ -238,17 +244,15 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
     if(ctgryIndx == -1 )
         cout << "root" ;
 
-    string tabs = "";
-    //get number of tabs needed
-    for(int a = 0; a < ctgryIndx + 2; a++)
-        tabs += "\t";
+
     
     
     int flag = 1;
     //try to fit in words of next category
         // current list of words in category
     vector<string> * curList = &parameters.data[parameters.ctgrs[ctgryIndx+1].ctgyName];
-    for(int i = 0; i < curList->size(); i++)
+    int i;
+    for( i = 0; i < curList->size(); i++)
     {
         //copy over string to pass along
         string temp(currS);
@@ -294,13 +298,21 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
         
         //if code gets here then next word is succesfully placed in here so call on current word
         flag = 0;
-        cout<<endl << tabs << "-> " << (*curList)[i] << "\t" ;
+        cout << " -> " << (*curList)[i] << "\t" ;
         wordsearch(temp, ctgryIndx +1);
         
     }
     
     if(flag == 1)
-        cout << "BackTrack";
+    {
+        string tabs = "";
+        
+        //get number of tabs needed
+        for(int a = 0; a < ctgryIndx + 2; a++)
+            tabs += "\t";
+        
+        cout << "BackTrack" << endl << tabs ;
+    }
     
 }
 
