@@ -24,7 +24,7 @@ public:
     DataBase(string path);
     void Init(string path);
 
-    int size(){return data.size();}
+    int size(){return (int)data.size();}
     
     //overloaded assignment[]
     vector<string>& operator[] (const string nString);
@@ -63,6 +63,12 @@ public:
     Parameters(string probpath, string datapath);
     void Init(string probpath, string datapath);
     
+    //returns the given category name based on the index of the solution
+    vector<string> retCategory(int idx);
+    
+    //returns the coresponding index inside of a category based on the solution index
+    int retCategoryIndex(int idx);
+    
     DataBase data;
     
     vector<CategoryDef> ctgrs;
@@ -82,8 +88,11 @@ public:
     Parameters parameters;
     void WordSearch();
     
+    void LetterSearch();
+    
 private:
     void wordsearch(string currS,int ctgryIndx);
+    void lettersearch(string currS,int idx);
     
 };
 

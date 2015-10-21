@@ -197,6 +197,57 @@ void Parameters::print()
 }
 
 
+vector<string> Parameters::retCategory(int idx)
+{
+    vector<string> temp;
+    //return proper category name
+    for(int i = 0; i < ctgrs.size(); i++)
+    {
+        //check all indexes of the category
+        if(idx == ctgrs[i].idxs[0])
+            temp.push_back(ctgrs[i].ctgyName);
+        
+        else if(idx == ctgrs[i].idxs[1])
+            temp.push_back(ctgrs[i].ctgyName);
+        
+        else if(idx == ctgrs[i].idxs[2])
+            temp.push_back(ctgrs[i].ctgyName);
+    }
+    
+    //else return empty string
+    return temp;
+}
+
+
+int Parameters::retCategoryIndex(int idx)
+{
+    //return proper category name
+    for(int i = 0; i < ctgrs.size(); i++)
+    {
+        //check all indexes of the category
+        if(idx == ctgrs[i].idxs[0])
+            return 0;
+        
+        else if(idx == ctgrs[i].idxs[1])
+            return 1;
+        
+        else if(idx == ctgrs[i].idxs[2])
+            return 2;
+    }
+    
+    //else return empty string
+    return -1;
+}
+
+
+
+
+
+
+
+
+
+
 CSTworld::CSTworld(string probpath, string datapath)
 {
     parameters.Init(probpath,datapath);
@@ -218,7 +269,7 @@ void CSTworld::WordSearch()
         if(i < parameters.ctgrs.size() -1)
             cout << "->";
     }
-    cout << endl;
+    cout << endl << endl;
     
     wordsearch(s,-1);
 }
@@ -229,7 +280,13 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
     
     if (ctgryIndx + 1 >= parameters.ctgrs.size() )
     {
-        cout << "(found result: " << currS << ")" << endl;
+        string tabs = "";
+        
+        //get number of tabs needed
+        for(int a = 0; a < ctgryIndx + 2; a++)
+            tabs += "\t";
+        
+        cout << "(found result: " << currS << ")" << endl << tabs;
         return;
     }
     
@@ -238,17 +295,15 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
     if(ctgryIndx == -1 )
         cout << "root" ;
 
-    string tabs = "";
-    //get number of tabs needed
-    for(int a = 0; a < ctgryIndx + 2; a++)
-        tabs += "\t";
+
     
     
     int flag = 1;
     //try to fit in words of next category
         // current list of words in category
     vector<string> * curList = &parameters.data[parameters.ctgrs[ctgryIndx+1].ctgyName];
-    for(int i = 0; i < curList->size(); i++)
+    int i;
+    for( i = 0; i < curList->size(); i++)
     {
         //copy over string to pass along
         string temp(currS);
@@ -294,15 +349,88 @@ void CSTworld::wordsearch(string currS,int ctgryIndx)
         
         //if code gets here then next word is succesfully placed in here so call on current word
         flag = 0;
-        cout<<endl << tabs << "-> " << (*curList)[i] << "\t" ;
+        cout << " -> " << (*curList)[i] << "\t" ;
         wordsearch(temp, ctgryIndx +1);
         
     }
     
     if(flag == 1)
-        cout << "BackTrack";
+    {
+        string tabs = "";
+        
+        //get number of tabs needed
+        for(int a = 0; a < ctgryIndx + 2; a++)
+            tabs += "\t";
+        
+        cout << "BackTrack" << endl << tabs ;
+    }
     
 }
+
+void CSTworld::LetterSearch()
+{
+    //make a string of the solution lenght and set tonull
+    string s = "";
+    s.resize(parameters.solLength);
+    for(int i = 0 ; i < parameters.solLength; i++)
+        s[i] = ' ';
+    
+    cout << "Search Order: index order of the letters in the result array" << endl << endl;
+    
+    lettersearch(s, -1);
+}
+
+
+
+
+
+
+/*
+ Possibly try doing this in a loop fashion instread of a recursion fassion
+ 
+ will need the getCategory funtion to return a list of categories instread of a single category to make sure all categories match
+ 
+ */
+
+
+void CSTworld::lettersearch(string currS, int idx)
+{
+    
+    //root check
+    if(idx == -1 )
+    {
+        cout << "root" ;
+        //call for first letter
+        lettersearch(currS, idx +1);
+    }
+    
+    
+    //get vector of all categories that shar that intex
+    vector<string> cats = parameters.retCategory(idx);
+    
+    // for all words in all categories that corespond to that index
+    for(int a = 0; a < cats.size(); a++)
+    {
+        //get the associated list of words
+        
+        //see if it fits if so call recursively if
+        
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
