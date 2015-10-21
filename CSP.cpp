@@ -133,6 +133,24 @@ Parameters::Parameters(string probpath, string datapath)
 {
     Init(probpath, datapath);
 }
+
+/*
+ This overloaded operator assumes that each category only appears once in each problem statement
+ 
+ */
+
+CategoryDef&  Parameters::operator[] (const string nString)
+{
+    int i;
+    for( i = 0; i < ctgrs.size(); i++)
+    {
+        if(ctgrs[i].ctgyName == nString)
+            return ctgrs[i];
+    }
+    // this will cause a seg fault in the event there is no matching category
+    return ctgrs[i];
+}
+
 void Parameters::Init(string probpath, string datapath)
 {
     //assign all data and reset what might have already been there
@@ -404,6 +422,18 @@ void CSTworld::lettersearch(string currS, int idx)
         lettersearch(currS, idx +1);
     }
     
+    if(idx >= currS.size())
+    {
+        string tabs = "";
+        
+        //get number of tabs needed
+        for(int a = 0; a < idx + 2; a++)
+            tabs += "\t";
+        
+        cout << "(found result: " << currS << ")" << endl << tabs;
+        return;
+    }
+
     
     //get vector of all categories that shar that intex
     vector<string> cats = parameters.retCategory(idx);
@@ -412,8 +442,18 @@ void CSTworld::lettersearch(string currS, int idx)
     for(int a = 0; a < cats.size(); a++)
     {
         //get the associated list of words
+        vector<string> * curList = &parameters.data[ cats[a] ];
         
-        //see if it fits if so call recursively if
+        //go through all words and see if there is a fit
+        for(int i = 0; i < curList->size(); i++)
+        {
+            //make sure all spaces are either matching or black
+            if( (currS[parameters[cats[a]].idxs[0]] == (*curList)[i][0] )||() )&&()&&() )
+            {
+                //replace new character and call for next iteration
+            }
+            //else letter doesnt fit so move on to next possible word
+        }
         
         
     }

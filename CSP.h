@@ -69,6 +69,9 @@ public:
     //returns the coresponding index inside of a category based on the solution index
     int retCategoryIndex(int idx);
     
+    //returns data associated with the category provided
+    CategoryDef& operator[] (const string nString);
+    
     DataBase data;
     
     vector<CategoryDef> ctgrs;
