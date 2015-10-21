@@ -64,7 +64,8 @@ public:
     void Init(string probpath, string datapath);
     
     //returns the given category name based on the index of the solution
-    string retCategory(int idx);
+    vector<string> retCategory(int idx);
+    
     //returns the coresponding index inside of a category based on the solution index
     int retCategoryIndex(int idx);
     
