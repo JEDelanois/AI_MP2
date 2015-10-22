@@ -30,8 +30,6 @@ Boardnode& Boardnode::operator=(const Boardnode &other)
 }
  
 
-
-
 //returns value
 int Boardnode::getVal()	const
 {
