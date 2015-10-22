@@ -21,26 +21,26 @@ Boardnode::Boardnode(int newval)
 		value = 99;
 }
 
-Boardnode& Boardnode::operator=(const Boardnode &obj){}
 
+Boardnode& Boardnode::operator=(const Boardnode &other)
 {
-	value = obj.getVal();
-	player = obj.getPlayer();
-	
-	return *this;
+	value = other.getVal();
+	player = other.getPlayer();
+
+    return *this;
 }
  
- 
+
 
 
 //returns value
-int Boardnode::getVal()	
+int Boardnode::getVal()	const
 {
 	return value;
 }
 
 //returns player
-int Boardnode::getPlayer() 
+int Boardnode::getPlayer() const
 {
 	return player;
 }
@@ -54,6 +54,15 @@ void Boardnode::changePlayer(int newplayer)
 		player = newplayer;
 }
 
+void Boardnode::flip()
+{
+    if(player == GREEN)
+        player = BLUE;
+    
+    else if(player == BLUE)
+        player = GREEN;
+}
+
 
 //constructor initializes board values to array vals, and assings all player assignments to 0 (empty)
 Board::Board(int ** values)
@@ -65,6 +74,20 @@ Board::Board(int ** values)
 			(board[i][j]) = Boardnode(values[i][j]);	//create new node with value from array and i,j coordinates
 		}
 	}
+
+}
+
+//'equals' overload operator for 'Board' class
+Board& Board::operator=(const Board &other)
+{
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			(board[i][j]) = other.(board[i][j]);	//create new node with value from array and i,j coordinates
+		}
+	}
+
 
 }
 
@@ -120,22 +143,57 @@ int Board::getGreenScore()
 //change player on the board to the given player
 void Board::changePlayer(int player, int x, int y)
 {
+    //if out of bounds then return
+    if((x < 0)||(x > 5)||(y < 0)||(y > 5))
+        return;
+    
 	(board[x][y]).changePlayer(player);
 }
 
+int Board::getPlayer(int x, int y)
+{
+    if((x < 0)||(x > 5)||(y < 0)||(y > 5))
+        return OUT;
+    else
+        return board[x][y].getPlayer();
+}
 
+
+void Board::flipPlayer(int x, int y)
+{
+    if((x < 0)||(x > 5)||(y < 0)||(y > 5))
+        return;
+    
+    board[x][y].flip();
+}
 
 int Board::move(int player, int x, int y)
 {
     //if space is already taken then return
-    if(board[x][y].getPlayer() != 0)
+    if((board[x][y].getPlayer() != 0)||(x > 5 )||(x < 0) ||(y > 5 )||(y < 0))
         return -1;
     
     //else in empty space sp place coresponding player there
     changePlayer(player, x, y);
     
-    //if there is a player on the same team around then check to see if
-    if(board[x-1])
+    //if there is a player on the same team around
+    if((getPlayer(x-1, y) == player)||(getPlayer(x, y-1) == player)||(getPlayer(x+1, y) == player)||(getPlayer(x, y+1) == player))
+    {
+        //flip other oponent pieces
+        if( (getPlayer(x-1, y) != NONE )&& (getPlayer(x-1, y) != OUT) && (getPlayer(x-1, y) != player) )
+           flipPlayer(x-1,y);
+        
+        if( (getPlayer(x+1, y) != NONE )&& (getPlayer(x+1, y) != OUT) && (getPlayer(x+1, y) != player) )
+            flipPlayer(x+1,y);
+        
+        if( (getPlayer(x, y-1) != NONE )&& (getPlayer(x, y-1) != OUT) && (getPlayer(x, y-1) != player) )
+            flipPlayer(x,y-1);
+        
+        if( (getPlayer(x, y+1) != NONE )&& (getPlayer(x, y+1) != OUT) && (getPlayer(x, y+1) != player) )
+            flipPlayer(x,y+1);
+           
+    }
+        
     
    
     return 1;
