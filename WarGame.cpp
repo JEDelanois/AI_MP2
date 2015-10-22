@@ -64,7 +64,7 @@ int Boardnode::getY()
 }
 
 //changes the boardnode player
-void changePlayer(int newplayer)
+void Boardnode::changePlayer(int newplayer)
 {
 	//make sure valid player
 	if(newplayer >= 0 && newplayer <= 2)
