@@ -14,37 +14,44 @@
 
 #endif /* defined(__AI_MP2__WarGame__) */
 
+#define BLUE 1
+#define GREEN 2
+#define NONE 0
+
 class Boardnode
 {
 public:
-	Boardnode(int value, int xcoord, int ycoord);	//constructor
-	void operator=(const Boardnode & obj); //equals operator
+    Boardnode(){}
+	Boardnode(int value);	//constructor
+	Boardnode & operator=(const Boardnode & obj); //equals operator
 
 	int getVal();				//get value of coordinates
 	int getPlayer();	//get player of coordinates
-	int getX();				//x coordinate
-	int getY();				//y coordinate
 	void changePlayer(int newplayer);	//changes player on the given piece
 
+    
 private:
 	int value;				//value of boardnode number
 	int player;				// 0 is no player, 1 is blue player, 2 is green player
-	int x;
-	int y;
 
 };
+
+
 
 class Board
 {
 public:
-	Board(int * values);	//constructor with array of values to fill in 
+	Board(int ** values);	//constructor with array of values to fill in
 	int getRemainingMoves();	//calculates remaining moves left in the game
 	int getBlueScore();
 	int getGreenScore();
-	void changePlayer(int player, int x, int y);
+    int getVal(int x, int y);
+    int move(int player, int x, int y);
+    
 	
 private:
 	Boardnode board[6][6];
+    void changePlayer(int player, int x, int y);
 
 };
 

@@ -9,35 +9,29 @@
 #include "WarGame.h"
 
 //Boardnode constructor
-Boardnode::Boardnode(int newval, int xcoord, int ycoord)
+Boardnode::Boardnode(int newval)
 {
 	value = newval;
 	player = 0;
-	x = xcoord;
-	y = ycoord;
 
 	//boundary checking
 	if (newval < 0)
 		value = 0;
 	if (newval > 99)
 		value = 99;
-	if (xcoord < 0)
-		x = 0;
-	if (xcoord > 5)
-		x = 5;
-	if (ycoord < 0)
-		y = 0;
-	if (ycoord > 5)
-		y = 5;
 }
 
-void Boardnode::operator=(const Boardnode & obj)
+Boardnode& Boardnode::operator=(const Boardnode &obj){}
+
 {
 	value = obj.getVal();
 	player = obj.getPlayer();
-	x = obj.getX();
-	y = obj.getY();
+	
+	return *this;
 }
+ 
+ 
+
 
 //returns value
 int Boardnode::getVal()	
@@ -51,17 +45,6 @@ int Boardnode::getPlayer()
 	return player;
 }
 
-//returns x coordinate
-int Boardnode::getX() 
-{
-	return x;
-}
-
-//returns y coordinate
-int Boardnode::getY() 
-{
-	return y;
-}
 
 //changes the boardnode player
 void Boardnode::changePlayer(int newplayer)
@@ -73,17 +56,18 @@ void Boardnode::changePlayer(int newplayer)
 
 
 //constructor initializes board values to array vals, and assings all player assignments to 0 (empty)
-Board::Board(int * values)
+Board::Board(int ** values)
 {
 	for (int i = 0; i < 6; i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			(board[i][j]) = Boardnode(values[i], i, j);	//create new node with value from array and i,j coordinates
+			(board[i][j]) = Boardnode(values[i][j]);	//create new node with value from array and i,j coordinates
 		}
 	}
 
 }
+
 int Board::getVal(int x, int y)
 {
 	return (board[x][y]).getVal();
@@ -110,7 +94,7 @@ int Board::getBlueScore()
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			if ((board[i][j]).getPlayer == 1)
+            if ((board[i][j]).getPlayer() == BLUE)
 				score += (board[i][j]).getVal();
 		}
 	}
@@ -125,7 +109,7 @@ int Board::getGreenScore()
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			if ((board[i][j]).getPlayer == 2)
+			if ((board[i][j]).getPlayer() == GREEN)
 				score += (board[i][j]).getVal();
 		}
 	}
@@ -134,7 +118,30 @@ int Board::getGreenScore()
 }
 
 //change player on the board to the given player
-void Board::changePlayer(int player)
+void Board::changePlayer(int player, int x, int y)
 {
 	(board[x][y]).changePlayer(player);
 }
+
+
+
+int Board::move(int player, int x, int y)
+{
+    //if space is already taken then return
+    if(board[x][y].getPlayer() != 0)
+        return -1;
+    
+    //else in empty space sp place coresponding player there
+    changePlayer(player, x, y);
+    
+    //if there is a player on the same team around then check to see if
+    if(board[x-1])
+    
+   
+    return 1;
+}
+
+
+
+
+
