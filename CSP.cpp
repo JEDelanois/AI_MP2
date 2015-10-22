@@ -437,22 +437,34 @@ void CSTworld::lettersearch(string currS, int idx)
     
     //get vector of all categories that shar that intex
     vector<string> cats = parameters.retCategory(idx);
-    
-    // for all words in all categories that corespond to that index
-    for(int a = 0; a < cats.size(); a++)
+    string asdf = cats[0];
+    // for letters possible for that index
+    for(char chr = 'A'; chr <= 'Z'; chr++)
     {
-        //get the associated list of words
-        vector<string> * curList = &parameters.data[ cats[a] ];
+        currS[idx] = chr;
         
-        //go through all words and see if there is a fit
-        for(int i = 0; i < curList->size(); i++)
+        //for all categories associated with this index
+        for(int a = 0; a < cats.size(); a++)
         {
-            //make sure all spaces are either matching or black
-            if( (currS[parameters[cats[a]].idxs[0]] == (*curList)[i][0] )||() )&&()&&() )
+            //get the associated list of words
+            vector<string> * curList = &parameters.data[ cats[a] ];
+            
+            //for all words in the list
+            for(int i = 0; i < curList->size(); i++)
             {
-                //replace new character and call for next iteration
+                //make sure all spaces are either matching or blank
+                char z = currS[parameters[cats[a]].idxs[0]];
+                char b = (*curList)[i][0];
+                string temp1 =(*curList)[i];
+                if( ((currS[parameters[cats[a]].idxs[0]] == (*curList)[i][0]) || (currS[parameters[cats[a]].idxs[0]] == ' ') ) &&
+                    ((currS[parameters[cats[a]].idxs[1]] == (*curList)[i][1]) || (currS[parameters[cats[a]].idxs[1]] == ' ') ) &&
+                    ((currS[parameters[cats[a]].idxs[2]] == (*curList)[i][2]) || (currS[parameters[cats[a]].idxs[2]] == ' ') ) )
+                {
+                    //call for next iteration
+                    lettersearch(currS, idx + 1);
+                }
+                //else letter doesnt fit so move on to next possible word or letter
             }
-            //else letter doesnt fit so move on to next possible word
         }
         
         
