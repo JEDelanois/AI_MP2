@@ -11,7 +11,7 @@
 #include "WarGame.h"
 
 int main(int argc, const char * argv[]) {
-    CSTworld temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+   // CSTworld temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
     
     
     cout << temp.parameters.data.printAll() << endl << endl;
@@ -21,6 +21,6 @@ int main(int argc, const char * argv[]) {
     cout << endl <<endl << endl;
     
     temp.WordSearch();
-    
+
     return 0;
 }
