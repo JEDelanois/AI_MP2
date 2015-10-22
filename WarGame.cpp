@@ -7,9 +7,18 @@
 //
 
 #include "WarGame.h"
+#include <iostream>
+
+using namespace std;
 
 //Boardnode constructor
 Boardnode::Boardnode(int newval)
+{
+    setval(newval);
+}
+
+
+void Boardnode::setval(int newval)
 {
 	value = newval;
 	player = 0;
@@ -63,13 +72,18 @@ void Boardnode::flip()
 
 
 //constructor initializes board values to array vals, and assings all player assignments to 0 (empty)
-Board::Board(int ** values)
+Board::Board(int values[6][6])
+{
+    build(values);
+}
+
+void Board::build(int values[6][6])
 {
 	for (int i = 0; i < 6; i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			(board[i][j]) = Boardnode(values[i][j]);	//create new node with value from array and i,j coordinates
+            board[i][j].setval(values[i][j]);	//create new node with value from array and i,j coordinates
 		}
 	}
 
@@ -82,12 +96,14 @@ Board& Board::operator=(const Board &other)
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			(board[i][j]) = other.(board[i][j]);	//create new node with value from array and i,j coordinates
+			board[i][j] = other.board[i][j];	//create new node with value from array and i,j coordinates
 		}
 	}
 
+    return *this;
 
 }
+
 
 int Board::getVal(int x, int y)
 {
@@ -101,7 +117,7 @@ int Board::getRemainingMoves()
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			if ((board[i][j]).getPlayer() == 0)
+			if ((board[i][j]).getPlayer() == NONE)
 				moves++;
 		}
 	}
@@ -138,6 +154,11 @@ int Board::getGreenScore()
 	return score;
 }
 
+int Board::eval()
+{
+    return (getBlueScore() - getGreenScore());
+}
+
 //change player on the board to the given player
 void Board::changePlayer(int player, int x, int y)
 {
@@ -164,6 +185,34 @@ void Board::flipPlayer(int x, int y)
     
     board[x][y].flip();
 }
+
+
+void Board::print()
+{
+    for(int y = 0; y < 6; y++)
+    {
+        //for each row
+        for(int x = 0; x < 6; x++)
+        {
+            cout << getVal(x, y) << "\t";
+        }
+        cout << endl;
+        //for each row print out the player
+        for(int x = 0; x < 6; x++)
+        {
+            if(getPlayer(x, y) == GREEN)
+                cout << "G";
+            
+            if(getPlayer(x, y) == BLUE)
+                cout << "B";
+            
+            cout << "\t";
+        }
+        cout << endl << endl;
+    }
+    
+}
+
 
 int Board::move(int player, int x, int y)
 {
@@ -196,6 +245,31 @@ int Board::move(int player, int x, int y)
    
     return 1;
 }
+
+
+
+void WarWorld::build(int values[6][6])
+{
+    board.build(values);
+}
+
+
+Board WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, int & total_expanded_nodes)
+{
+    //if at final depth then return the board or end game
+    if((currdepth == finaldepth) || (currBoard.getRemainingMoves() == 0))
+    {
+        return currBoard;
+    }
+    
+    
+    return currBoard;
+        
+}
+
+
+
+
 
 
 

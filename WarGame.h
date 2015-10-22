@@ -19,12 +19,16 @@
 #define NONE 0
 #define OUT 3
 
+#define MAXP 1
+#define MINP 2
+
+
 class Boardnode
 {
 public:
     Boardnode(){}
 	Boardnode(int value);	//constructor
-
+    void setval(int newval);
 	Boardnode& operator=(const Boardnode &other); //equals operator
 
 
@@ -45,7 +49,9 @@ private:
 class Board
 {
 public:
-	Board(int ** values);	//constructor with array of values to fill in
+    Board(){}
+	Board(int values[6][6]);	//constructor with array of values to fill in
+    void build(int values[6][6]);
 	Board& operator=(const Board &other);	//'equals' overload operator
 	int getRemainingMoves();	//calculates remaining moves left in the game
 	int getBlueScore();
@@ -54,6 +60,12 @@ public:
     int getPlayer(int x, int y);
     int move(int player, int x, int y);
     void flipPlayer(int x, int y);
+    void print();
+    
+    
+    //evaluation function for the current game state blue - green
+    int eval();
+    
 	 
 	
 private:
@@ -66,8 +78,15 @@ private:
 class WarWorld
 {
 public:
+    WarWorld(){}
+    Board board;
+    void build(int values[6][6]);
     
+    void playGame(int player1, int player2);
 private:
+    //player 1 is blue and MAX  ----  player two in green and MIN
+    //player represents what whos current turn it is
+    Board MinMax(Board currBoard, int player ,int currdepth, int finaldepth, int & total_expanded_nodes);
     
 };
 
