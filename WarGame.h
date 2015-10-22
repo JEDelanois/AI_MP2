@@ -17,17 +17,19 @@
 #define BLUE 1
 #define GREEN 2
 #define NONE 0
+#define OUT 3
 
 class Boardnode
 {
 public:
     Boardnode(){}
 	Boardnode(int value);	//constructor
-	void operator=(const Boardnode & obj); //equals operator
+	Boardnode& operator=(const Boardnode &other); //equals operator
 
-	int getVal();				//get value of coordinates
-	int getPlayer();	//get player of coordinates
+    int getVal() const;				//get value of coordinates
+    int getPlayer() const;	//get player of coordinates
 	void changePlayer(int newplayer);	//changes player on the given piece
+    void flip(); //flips the player
 
     
 private:
@@ -46,8 +48,9 @@ public:
 	int getBlueScore();
 	int getGreenScore();
     int getVal(int x, int y);
+    int getPlayer(int x, int y);
     int move(int player, int x, int y);
-    
+    void flipPlayer(int x, int y);
 	
 private:
 	Boardnode board[6][6];

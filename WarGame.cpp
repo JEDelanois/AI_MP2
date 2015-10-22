@@ -21,27 +21,25 @@ Boardnode::Boardnode(int newval)
 		value = 99;
 }
 
-void Boardnode::operator=(const Boardnode & obj){}
-/*
+Boardnode& Boardnode::operator=(const Boardnode &other)
 {
-	value = obj.getVal();
-	player = obj.getPlayer();
-	x = obj.getX();
-	y = obj.getY();
-    
+	value = other.getVal();
+	player = other.getPlayer();
+
+    return *this;
 }
  
- */
+
 
 
 //returns value
-int Boardnode::getVal()	
+int Boardnode::getVal()	const
 {
 	return value;
 }
 
 //returns player
-int Boardnode::getPlayer() 
+int Boardnode::getPlayer() const
 {
 	return player;
 }
@@ -53,6 +51,15 @@ void Boardnode::changePlayer(int newplayer)
 	//make sure valid player
 	if(newplayer >= 0 && newplayer <= 2)
 		player = newplayer;
+}
+
+void Boardnode::flip()
+{
+    if(player == GREEN)
+        player = BLUE;
+    
+    else if(player == BLUE)
+        player = GREEN;
 }
 
 
@@ -121,22 +128,57 @@ int Board::getGreenScore()
 //change player on the board to the given player
 void Board::changePlayer(int player, int x, int y)
 {
+    //if out of bounds then return
+    if((x < 0)||(x > 5)||(y < 0)||(y > 5))
+        return;
+    
 	(board[x][y]).changePlayer(player);
 }
 
+int Board::getPlayer(int x, int y)
+{
+    if((x < 0)||(x > 5)||(y < 0)||(y > 5))
+        return OUT;
+    else
+        return board[x][y].getPlayer();
+}
 
+
+void Board::flipPlayer(int x, int y)
+{
+    if((x < 0)||(x > 5)||(y < 0)||(y > 5))
+        return;
+    
+    board[x][y].flip();
+}
 
 int Board::move(int player, int x, int y)
 {
     //if space is already taken then return
-    if(board[x][y].getPlayer() != 0)
+    if((board[x][y].getPlayer() != 0)||(x > 5 )||(x < 0) ||(y > 5 )||(y < 0))
         return -1;
     
     //else in empty space sp place coresponding player there
     changePlayer(player, x, y);
     
-    //if there is a player on the same team around then check to see if
-    if(board[x-1])
+    //if there is a player on the same team around
+    if((getPlayer(x-1, y) == player)||(getPlayer(x, y-1) == player)||(getPlayer(x+1, y) == player)||(getPlayer(x, y+1) == player))
+    {
+        //flip other oponent pieces
+        if( (getPlayer(x-1, y) != NONE )&& (getPlayer(x-1, y) != OUT) && (getPlayer(x-1, y) != player) )
+           flipPlayer(x-1,y);
+        
+        if( (getPlayer(x+1, y) != NONE )&& (getPlayer(x+1, y) != OUT) && (getPlayer(x+1, y) != player) )
+            flipPlayer(x+1,y);
+        
+        if( (getPlayer(x, y-1) != NONE )&& (getPlayer(x, y-1) != OUT) && (getPlayer(x, y-1) != player) )
+            flipPlayer(x,y-1);
+        
+        if( (getPlayer(x, y+1) != NONE )&& (getPlayer(x, y+1) != OUT) && (getPlayer(x, y+1) != player) )
+            flipPlayer(x,y+1);
+           
+    }
+        
     
    
     return 1;
