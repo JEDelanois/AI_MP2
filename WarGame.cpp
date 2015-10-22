@@ -21,6 +21,7 @@ Boardnode::Boardnode(int newval)
 		value = 99;
 }
 
+
 Boardnode& Boardnode::operator=(const Boardnode &other)
 {
 	value = other.getVal();
@@ -71,6 +72,20 @@ Board::Board(int ** values)
 			(board[i][j]) = Boardnode(values[i][j]);	//create new node with value from array and i,j coordinates
 		}
 	}
+
+}
+
+//'equals' overload operator for 'Board' class
+Board& Board::operator=(const Board &other)
+{
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			(board[i][j]) = other.(board[i][j]);	//create new node with value from array and i,j coordinates
+		}
+	}
+
 
 }
 

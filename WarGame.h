@@ -24,7 +24,9 @@ class Boardnode
 public:
     Boardnode(){}
 	Boardnode(int value);	//constructor
+
 	Boardnode& operator=(const Boardnode &other); //equals operator
+
 
     int getVal() const;				//get value of coordinates
     int getPlayer() const;	//get player of coordinates
@@ -44,6 +46,7 @@ class Board
 {
 public:
 	Board(int ** values);	//constructor with array of values to fill in
+	Board& operator=(const Board &other);	//'equals' overload operator
 	int getRemainingMoves();	//calculates remaining moves left in the game
 	int getBlueScore();
 	int getGreenScore();
@@ -51,6 +54,7 @@ public:
     int getPlayer(int x, int y);
     int move(int player, int x, int y);
     void flipPlayer(int x, int y);
+	 
 	
 private:
 	Boardnode board[6][6];
