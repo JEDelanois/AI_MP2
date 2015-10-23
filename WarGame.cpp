@@ -357,7 +357,7 @@ void WarWorld::startGame()
     
     
     int p2type = -1;
-    while(p1type < 0)
+    while(p2type < 0)
     {
         cout << "Enter player 2 type (Enter: 1-human  2-MinMax  3-AlphaBeta)" << endl;
         cin >> p2type;
@@ -391,7 +391,73 @@ void WarWorld::startGame()
 
 Board WarWorld::game(int player1, int player2)
 {
+    Board currB = board;
+    while(board.getRemainingMoves() > 0)
+    {
+        //make player one go first
+        if(player1 == HUMAN)
+        {
+            int x = -1;
+            int y = -1;
+            int status = -1;
+            
+            while(status < 0)
+            {
+                while((x < 0) || (y < 0))
+                {
+                    currB.print();
+                    cout << "Player 1 make your move (Enter: X Y)" << endl;
+                    cin >> x >> y;
+                   
+                    if(x > 5)
+                        x = -1;
+                    if(y > 5)
+                        y = -1;
+                    
+                }
+                //make sure its a valid move
+                status = currB.move(P1, x, y );
+            }
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        //player 2 moves
+        if(player2 == HUMAN)
+        {
+            int x = -1;
+            int y = -1;
+            int status = -1;
+            
+            while(status < 0)
+            {
+                while((x < 0) || (y < 0))
+                {
+                    currB.print();
+                    cout << "Player 2 make your move (Enter: X Y)" << endl;
+                    cin >> x >> y;
+                    
+                    if(x > 5)
+                        x = -1;
+                    if(y > 5)
+                        y = -1;
+                    
+                }
+                //make sure its a valid move
+                status = currB.move(P2, x, y );
+            }
+        }
+    }//while game is playing
     
+    
+    return currB;
 }
 
 
