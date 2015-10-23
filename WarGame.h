@@ -98,6 +98,8 @@ private:
     //player represents what whos current turn it is
     int MinMax(Board currBoard, int player ,int currdepth, int finaldepth, int & total_expanded_nodes,int & selx, int & sely);
     
+    int AlphaBeta(Board currBoard,int player ,int currdepth, int finaldepth, int & total_expanded_nodes,int & selx, int & sely, int compVal, bool compFlag);
+    
 };
 
 

@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
     
     //create random board
     int temp[6][6];
-    srand(99);
+    srand(60);
     
     for(int x = 0; x<6; x++)
     {
