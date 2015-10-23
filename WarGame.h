@@ -22,6 +22,10 @@
 #define MAXP 1
 #define MINP 2
 
+#define HUMAN 1
+#define MINMAX 2
+#define ABP 3
+
 
 class Boardnode
 {
@@ -81,12 +85,15 @@ public:
     WarWorld(){}
     Board board;
     void build(int values[6][6]);
+    void startGame();
     
-    void playGame(int player1, int player2);
 private:
+    Board game(int player1, int player2);
+    
+    
     //player 1 is blue and MAX  ----  player two in green and MIN
     //player represents what whos current turn it is
-    int MinMax(Board currBoard, int player ,int currdepth, int finaldepth, int & total_expanded_nodes);
+    int MinMax(Board currBoard, int player ,int currdepth, int finaldepth, int & total_expanded_nodes,int & selx, int & sely);
     
 };
 
