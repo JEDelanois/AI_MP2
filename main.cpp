@@ -10,6 +10,8 @@
 #include "CSP.h"
 #include "WarGame.h"
 
+
+
 int main(int argc, const char * argv[]) {
     //CSTworld temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
 	CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/prob1.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
@@ -18,12 +20,37 @@ int main(int argc, const char * argv[]) {
     
     temp.parameters.print();
     
+<<<<<<< HEAD
     cout << endl <<endl << endl;
     
 
     //temp.LetterSearch();
 	int a;
 	cin >> a;
+=======
+   // temp.parameters.print();
+    //
+    //cout << endl <<endl << endl;
+    
+
+    //temp.LetterSearch();
+    
+    //create random board
+    int temp[6][6];
+    srand(6);
+    
+    for(int x = 0; x<6; x++)
+    {
+        for(int y = 0; y<6; y++)
+        {
+            temp[x][y] = rand()%100;
+        }
+    }
+    WarWorld world;
+    
+    world.build(temp);
+    world.board.print();
+>>>>>>> 3d7d073b5a98f4962aea9df7f210da5b9797d47c
 
     return 0;
 }
