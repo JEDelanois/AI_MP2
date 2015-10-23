@@ -196,6 +196,7 @@ void Board::print()
         {
             cout << getVal(x, y) << "\t";
         }
+        cout << "|\t" << y;
         cout << endl;
         //for each row print out the player
         for(int x = 0; x < 6; x++)
@@ -208,8 +209,11 @@ void Board::print()
             
             cout << "\t";
         }
+        cout << "|";
         cout << endl << endl;
     }
+    cout << "___________________________" << endl;
+    cout << "0\t1\t2\t3\t4\t5"<< endl;
     
 }
 
@@ -217,7 +221,7 @@ void Board::print()
 int Board::move(int player, int x, int y)
 {
     //if space is already taken then return
-    if((board[x][y].getPlayer() != 0)||(x > 5 )||(x < 0) ||(y > 5 )||(y < 0))
+    if( (board[x][y].getPlayer() != 0) ||(x > 5 )||(x < 0) ||(y > 5 )||(y < 0))
         return -1;
     
     //else in empty space sp place coresponding player there
@@ -392,7 +396,7 @@ void WarWorld::startGame()
 Board WarWorld::game(int player1, int player2)
 {
     Board currB = board;
-    while(board.getRemainingMoves() > 0)
+    while(currB.getRemainingMoves() > 0)
     {
         //make player one go first
         if(player1 == HUMAN)
@@ -417,12 +421,18 @@ Board WarWorld::game(int player1, int player2)
                 }
                 //make sure its a valid move
                 status = currB.move(P1, x, y );
+                x = y = -1; //if there is an error these need to be negative
             }
             
-            
+        }
+        else if(player1 == MINMAX)
+        {
+        
+        }
+        else if(player1 == ABP)
+        {
             
         }
-        
         
         
         
@@ -452,8 +462,21 @@ Board WarWorld::game(int player1, int player2)
                 }
                 //make sure its a valid move
                 status = currB.move(P2, x, y );
+                x = y = -1; //if there is an error these need to be negative
             }
         }
+        else if(player1 == MINMAX)
+        {
+            
+        }
+        else if(player1 == ABP)
+        {
+            
+        }
+        
+        
+        
+        
     }//while game is playing
     
     

@@ -39,7 +39,7 @@ int main(int argc, const char * argv[]) {
     WarWorld world;
     
     world.build(temp);
-    world.board.print();
+    world.startGame();
 
     return 0;
 }
