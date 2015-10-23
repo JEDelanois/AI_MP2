@@ -214,7 +214,7 @@ void Board::print()
         cout << "|";
         cout << endl << endl;
     }
-    cout << "___________________________" << endl;
+    cout << "_________________________" << endl;
     cout << "0\t1\t2\t3\t4\t5"<< endl;
     
 }
@@ -388,7 +388,7 @@ int WarWorld::AlphaBeta(Board currBoard,int player ,int currdepth, int finaldept
     
     //comparison value for  pruning
     int ncompval = 0;
-    int ncompFlag = false; // always need to fully expand first children
+    int ncompFlag = false; // false until there are multiple nodes on current level
     for(int y = 0; y < 6; y++)
     {
         for(int x = 0; x < 6; x++)
@@ -420,18 +420,19 @@ int WarWorld::AlphaBeta(Board currBoard,int player ,int currdepth, int finaldept
                 MinMaxvals.push_back( abresult );
                 
                 
-                //see if this current node needs to be pruned
+                //see if this current node can be pruned
                 if(compFlag)
                 {
-                    if(player == MAXP)
+                    if(player == MAXP)//if the player is a max
                     {
-                       if(abresult < compVal)// if found a lower value return and stop expanding sibling does
-                           return abresult;
+                       if(abresult > compVal)// and it finds a larger value than the compare value then return since
+                           return abresult; // this means that the parent node to this already has a better option then the current path
                     }
                     else if(player == MINP)
                     {
-                        if(abresult > compVal)// if found a higher value return and stop expanding sibling does
-                            return abresult;
+                        if(abresult < compVal)// and it finds a smaller value than the compare value then return since
+                            return abresult; // this means that the parent node of teh parent node (grandparent node) to this
+                                            //already has a better option then the current path so terminate this path
                     }
                     
                 }
