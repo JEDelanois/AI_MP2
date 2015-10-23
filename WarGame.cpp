@@ -325,7 +325,10 @@ int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, 
         for(int i = 0; i < MinMaxvals.size(); i++)
         {
             if(MinMaxvals[i] > temp)//if found new max
+            {
+                temp = MinMaxvals[i]; //set new value
                 tidx = i; // then save new index asmax
+            }
         }
     }
     
@@ -334,7 +337,11 @@ int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, 
         for(int i = 0; i < MinMaxvals.size(); i++)
         {
             if(MinMaxvals[i] < temp)//if found new max
+            {
+                temp = MinMaxvals[i]; //set new value
                 tidx = i; // then save new index asmax
+            }
+
         }
         
     }
@@ -344,6 +351,8 @@ int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, 
     sely = yvals[tidx];
     
     //and return the value of the node to parents
+    
+    int asdf = MinMaxvals.size();
     return MinMaxvals[tidx];
 }
 
@@ -371,13 +380,16 @@ void WarWorld::startGame()
             p2type = -1;
     }
     
-    Board temp = game(p1type,p2type);
+    int exp1 =0;
+    int exp2 =0;
+    Board temp = game(p1type,p2type,exp1,exp2);
     
     //print our the final board
     temp.print();
     
-    cout << "Green Score: " << temp.getGreenScore() << endl;
-    cout << "Blue Score: " << temp.getBlueScore() << endl;
+    cout << "Player 1 Blue \tScore: " << temp.getBlueScore() << "\tNodes: " << exp1 << endl;
+    cout << "Player 2 Green \tScore: " << temp.getGreenScore() << "\tNodes: " << exp2 << endl;
+    
     
     if(temp.eval() > 0)
     {
@@ -385,7 +397,7 @@ void WarWorld::startGame()
     }
     else if(temp.eval() < 0)
     {
-        cout << "Green Winds!!!!" << endl;
+        cout << "Green Wins!!!!" << endl;
     }
     else
     {
@@ -395,11 +407,9 @@ void WarWorld::startGame()
 }
 
 
-Board WarWorld::game(int player1, int player2)
+Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expanded)
 {
     Board currB = board;
-    int p1expanded = 0;
-    int p2expanded = 0;
     while(currB.getRemainingMoves() > 0)
     {
         //make player one go first

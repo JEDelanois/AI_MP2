@@ -91,7 +91,7 @@ public:
     void startGame();
     
 private:
-    Board game(int player1, int player2);
+    Board game(int player1, int player2, int & p1expanded, int & p2expanded);
     
     
     //player 1 is blue and MAX  ----  player two in green and MIN
