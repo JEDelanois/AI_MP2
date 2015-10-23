@@ -84,16 +84,16 @@ Board& Board::operator=(const Board &other)
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			(board[i][j]) = other.(board[i][j]);	//create new node with value from array and i,j coordinates
+			board[i][j] = other.board[i][j];	//create new node with value from array and i,j coordinates
 		}
 	}
 
-
+	return *this;
 }
 
 int Board::getVal(int x, int y)
 {
-	return (board[x][y]).getVal();
+	return board[x][y].getVal();
 }
 
 int Board::getRemainingMoves()
