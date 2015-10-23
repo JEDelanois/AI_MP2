@@ -215,7 +215,7 @@ void Board::print()
         cout << "|";
         cout << endl << endl;
     }
-    cout << "___________________________" << endl;
+    cout << "_________________________" << endl;
     cout << "0\t1\t2\t3\t4\t5"<< endl;
     
 }
@@ -279,8 +279,9 @@ int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, 
         return currBoard.eval();
     }
     
-    
+    //count current node as expanded
     total_expanded_nodes++;
+    
     //all these holde the data for all the child nodes
     vector<int> xvals;
     vector<int> yvals;
@@ -326,7 +327,10 @@ int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, 
         for(int i = 0; i < MinMaxvals.size(); i++)
         {
             if(MinMaxvals[i] > temp)//if found new max
+            {
+                temp = MinMaxvals[i]; //set new value
                 tidx = i; // then save new index asmax
+            }
         }
     }
     
@@ -335,7 +339,11 @@ int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, 
         for(int i = 0; i < MinMaxvals.size(); i++)
         {
             if(MinMaxvals[i] < temp)//if found new max
+            {
+                temp = MinMaxvals[i]; //set new value
                 tidx = i; // then save new index asmax
+            }
+
         }
         
     }
@@ -345,6 +353,149 @@ int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, 
     sely = yvals[tidx];
     
     //and return the value of the node to parents
+    
+    return MinMaxvals[tidx];
+}
+
+
+/*
+ currboard - current game state
+ cur depth - current depth into the local tree
+ finaldepth- final depth search of the tree
+ total_expaneded_nodes = how many nodes are searched
+ 
+ selx and sely are the cordinates that the current min max player will put there piece this is
+ so that when the game function calls this it can aquire its next move
+ 
+compFlag signifies if the comp val given is valid. on first calls there no no value to compare so you need to ignore flag so make FALSE!
+ */
+int WarWorld::AlphaBeta(Board currBoard,int player ,int currdepth, int finaldepth, int & total_expanded_nodes,int & selx, int & sely, int compVal, bool compFlag)
+{
+    
+    //if at final depth then return the board or end game
+    if((currdepth == finaldepth) || (currBoard.getRemainingMoves() == 0))
+    {
+        total_expanded_nodes++;
+        return currBoard.eval();
+    }
+    
+    //count current node as expanded
+    total_expanded_nodes++;
+    
+    //all these holde the data for all the child nodes
+    vector<int> xvals;
+    vector<int> yvals;
+    vector<int> MinMaxvals;
+    
+    //comparison value for  pruning
+    int ncompval = 0;
+    int ncompFlag = false; // false until there are multiple nodes on current level
+    for(int y = 0; y < 6; y++)
+    {
+        for(int x = 0; x < 6; x++)
+        {
+            // if there is no pice place one there to see
+            if(currBoard.getPlayer(x, y) == NONE)
+            {
+                // save the MinMax value and the move that it was associated with
+                xvals.push_back(x);
+                yvals.push_back(y);
+                
+                //copy board and make the next move
+                Board temp = currBoard;
+                temp.move(player, x, y);
+                
+                int tplayer;
+                if(player == GREEN)
+                    tplayer = BLUE;
+                else
+                    tplayer = GREEN;
+                
+                //only care about these in the game not in any of the recursive min max calls
+                int tx = 0;
+                int ty = 0;
+                
+                
+                int abresult = AlphaBeta(temp, tplayer, currdepth +1, finaldepth, total_expanded_nodes, tx, ty,ncompval, ncompFlag);
+                
+                MinMaxvals.push_back( abresult );
+                
+                
+                //see if this current node can be pruned
+                if(compFlag)
+                {
+                    if(player == MAXP)//if the player is a max
+                    {
+                       if(abresult > compVal)// and it finds a larger value than the compare value then return since
+                           return abresult; // this means that the parent node to this already has a better option then the current path
+                    }
+                    else if(player == MINP)
+                    {
+                        if(abresult < compVal)// and it finds a smaller value than the compare value then return since
+                            return abresult; // this means that the parent node of teh parent node (grandparent node) to this
+                                            //already has a better option then the current path so terminate this path
+                    }
+                    
+                }
+                
+                //set comparison value for its child nodes!!!
+                if( player == MAXP )// set comparison value for max players
+                {
+                    if( (ncompFlag == false) || (abresult > compVal) )//if first iteration or new max
+                    {
+                        ncompval = abresult;
+                    }
+                }
+                else if(player == MINP)// set comparison value for min players
+                {
+                    if( (ncompFlag == false) || (abresult < compVal) )//if first iteration or new min
+                    {
+                        ncompval = abresult;
+                    }
+                }
+                //we now have atleast one val to compare for next nodes so make sure to tell next iterations to compare
+                ncompFlag = true;
+            }
+            
+        }
+    }
+    
+    //assume first index for comparison
+    int tidx = 0;
+    int temp = MinMaxvals[0];
+    //if max player return max value
+    if(player == MAXP)
+    {
+        for(int i = 0; i < MinMaxvals.size(); i++)
+        {
+            if(MinMaxvals[i] > temp)//if found new max
+            {
+                temp = MinMaxvals[i]; //set new value
+                tidx = i; // then save new index asmax
+            }
+        }
+    }
+    
+    else// else min player so return min values
+    {
+        for(int i = 0; i < MinMaxvals.size(); i++)
+        {
+            if(MinMaxvals[i] < temp)//if found new max
+            {
+                temp = MinMaxvals[i]; //set new value
+                tidx = i; // then save new index asmax
+            }
+            
+        }
+        
+    }
+    
+    //pass back the xy vals for the game to make next move
+    selx = xvals[tidx];
+    sely = yvals[tidx];
+    
+    //and return the value of the node to parents
+    
     return MinMaxvals[tidx];
 }
 
@@ -372,13 +523,34 @@ void WarWorld::startGame()
             p2type = -1;
     }
     
-    Board temp = game(p1type,p2type);
+    int exp1 =0;
+    int exp2 =0;
+    Board temp = game(p1type,p2type,exp1,exp2);
     
     //print our the final board
+    cout << "_____________________________________________" << endl << "FINAL GAME STATE" << endl << endl;
     temp.print();
+    cout << endl;
     
-    cout << "Green Score: " << temp.getGreenScore() << endl;
-    cout << "Blue Score: " << temp.getBlueScore() << endl;
+    
+    if(p1type == HUMAN)
+        cout << "Human\t\t";
+    else if(p1type == MINMAX)
+        cout << "MinMax\t\t";
+    else if(p1type == ABP)
+        cout << "AlphaBeta\t";
+    
+    cout << "Player-1-Blue \tScore: " << temp.getBlueScore() << "\t\tNodes: " << exp1 << endl << endl;
+    
+    if(p2type == HUMAN)
+        cout << "Human\t\t";
+    else if(p2type == MINMAX)
+        cout << "MinMax\t\t";
+    else if(p2type == ABP)
+        cout << "AlphaBeta\t";
+    
+    cout << "Player-2-Green \tScore: " << temp.getGreenScore() << "\t\tNodes: " << exp2 << endl << endl;
+    
     
     if(temp.eval() > 0)
     {
@@ -386,7 +558,7 @@ void WarWorld::startGame()
     }
     else if(temp.eval() < 0)
     {
-        cout << "Green Winds!!!!" << endl;
+        cout << "Green Wins!!!!" << endl;
     }
     else
     {
@@ -396,11 +568,9 @@ void WarWorld::startGame()
 }
 
 
-Board WarWorld::game(int player1, int player2)
+Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expanded)
 {
     Board currB = board;
-    int p1expanded = 0;
-    int p2expanded = 0;
     while(currB.getRemainingMoves() > 0)
     {
         //make player one go first
@@ -443,6 +613,13 @@ Board WarWorld::game(int player1, int player2)
         }
         else if(player1 == ABP)
         {
+            int x = -7;
+            int y = -7;
+            
+            AlphaBeta(currB, P1, 0, 4, p1expanded, x, y,0,false);
+            currB.move(P1, x, y);
+            currB.print();
+            cout << "AlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
         
@@ -490,6 +667,13 @@ Board WarWorld::game(int player1, int player2)
         }
         else if(player2 == ABP)
         {
+            int x = -7;
+            int y = -7;
+            
+            AlphaBeta(currB, P2, 0, 4, p2expanded, x, y,0,false);
+            currB.move(P2, x, y);
+            currB.print();
+            cout << "AlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
         

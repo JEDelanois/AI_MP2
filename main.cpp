@@ -7,14 +7,17 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "CSP.h"
 #include "WarGame.h"
 
 
 
+
 int main(int argc, const char * argv[]) {
     //CSTworld temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
-	CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob1.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
+	//CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob3.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
 
     //cout << temp.parameters.data.printAll() << endl << endl;
     
@@ -22,26 +25,36 @@ int main(int argc, const char * argv[]) {
     
     cout << endl <<endl << endl;
     
-	temp.WordSearch();
+	//temp.WordSearch();
    // temp.LetterSearch();
     
     //create random board
-    /*int temp[6][6];
-    srand(1);
+
+	ifstream mapfile;
+
+	//CHANGE YOUR PATH HERE
+	//mapfile.open("C:/Users/Dallas/Documents/CS 440/AI_MP2/Maps/Narvik.txt");
+
+    int temp[6][6];
+    srand(43);
+
     
     for(int x = 0; x<6; x++)
     {
         for(int y = 0; y<6; y++)
         {
-            temp[x][y] = rand()%100;
+           temp[x][y] = rand()%100;
+		//mapfile >> temp[x][y];		//reads in given board
         }
     }
     WarWorld world;
     
     world.build(temp);
 
-    world.startGame();*/
-	int a;
-	cin >> a;
+    world.startGame();
+	//int a;
+	//cin >> a;
+
+	//mapfile.close();
     return 0;
 }
