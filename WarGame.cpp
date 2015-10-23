@@ -100,12 +100,9 @@ Board& Board::operator=(const Board &other)
 		}
 	}
 
-<<<<<<< HEAD
-	return *this;
-=======
     return *this;
 
->>>>>>> 3d7d073b5a98f4962aea9df7f210da5b9797d47c
+
 }
 
 

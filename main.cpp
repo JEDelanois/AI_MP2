@@ -14,30 +14,20 @@
 
 int main(int argc, const char * argv[]) {
     //CSTworld temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
-	CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/prob1.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
+	CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob1.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
 
-    cout << temp.parameters.data.printAll() << endl << endl;
+    //cout << temp.parameters.data.printAll() << endl << endl;
     
-    temp.parameters.print();
+    //temp.parameters.print();
     
-<<<<<<< HEAD
     cout << endl <<endl << endl;
     
-
-    //temp.LetterSearch();
-	int a;
-	cin >> a;
-=======
-   // temp.parameters.print();
-    //
-    //cout << endl <<endl << endl;
-    
-
-    //temp.LetterSearch();
+	temp.WordSearch();
+   // temp.LetterSearch();
     
     //create random board
-    int temp[6][6];
-    srand(6);
+    /*int temp[6][6];
+    srand(1);
     
     for(int x = 0; x<6; x++)
     {
@@ -50,7 +40,8 @@ int main(int argc, const char * argv[]) {
     
     world.build(temp);
 
-    world.startGame();
-
+    world.startGame();*/
+	int a;
+	cin >> a;
     return 0;
 }
