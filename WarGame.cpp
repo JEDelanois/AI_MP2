@@ -527,6 +527,7 @@ void WarWorld::startGame()
     Board temp = game(p1type,p2type,exp1,exp2);
     
     //print our the final board
+    cout << "_____________________________________________" << endl << "FINAL GAME STATE" << endl << endl;
     temp.print();
     cout << endl;
     
