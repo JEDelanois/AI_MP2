@@ -200,6 +200,7 @@ void Board::print()
         {
             cout << getVal(x, y) << "\t";
         }
+        cout << "|\t" << y;
         cout << endl;
         //for each row print out the player
         for(int x = 0; x < 6; x++)
@@ -212,8 +213,11 @@ void Board::print()
             
             cout << "\t";
         }
+        cout << "|";
         cout << endl << endl;
     }
+    cout << "___________________________" << endl;
+    cout << "0\t1\t2\t3\t4\t5"<< endl;
     
 }
 
@@ -221,7 +225,7 @@ void Board::print()
 int Board::move(int player, int x, int y)
 {
     //if space is already taken then return
-    if((board[x][y].getPlayer() != 0)||(x > 5 )||(x < 0) ||(y > 5 )||(y < 0))
+    if( (board[x][y].getPlayer() != 0) ||(x > 5 )||(x < 0) ||(y > 5 )||(y < 0))
         return -1;
     
     //else in empty space sp place coresponding player there
@@ -361,7 +365,7 @@ void WarWorld::startGame()
     
     
     int p2type = -1;
-    while(p1type < 0)
+    while(p2type < 0)
     {
         cout << "Enter player 2 type (Enter: 1-human  2-MinMax  3-AlphaBeta)" << endl;
         cin >> p2type;
@@ -395,7 +399,92 @@ void WarWorld::startGame()
 
 Board WarWorld::game(int player1, int player2)
 {
+    Board currB = board;
+    while(currB.getRemainingMoves() > 0)
+    {
+        //make player one go first
+        if(player1 == HUMAN)
+        {
+            int x = -1;
+            int y = -1;
+            int status = -1;
+            
+            while(status < 0)
+            {
+                while((x < 0) || (y < 0))
+                {
+                    currB.print();
+                    cout << "Player 1 make your move (Enter: X Y)" << endl;
+                    cin >> x >> y;
+                   
+                    if(x > 5)
+                        x = -1;
+                    if(y > 5)
+                        y = -1;
+                    
+                }
+                //make sure its a valid move
+                status = currB.move(P1, x, y );
+                x = y = -1; //if there is an error these need to be negative
+            }
+            
+        }
+        else if(player1 == MINMAX)
+        {
+        
+        }
+        else if(player1 == ABP)
+        {
+            
+        }
+        
+        
+        
+        
+        
+        
+        //player 2 moves
+        if(player2 == HUMAN)
+        {
+            int x = -1;
+            int y = -1;
+            int status = -1;
+            
+            while(status < 0)
+            {
+                while((x < 0) || (y < 0))
+                {
+                    currB.print();
+                    cout << "Player 2 make your move (Enter: X Y)" << endl;
+                    cin >> x >> y;
+                    
+                    if(x > 5)
+                        x = -1;
+                    if(y > 5)
+                        y = -1;
+                    
+                }
+                //make sure its a valid move
+                status = currB.move(P2, x, y );
+                x = y = -1; //if there is an error these need to be negative
+            }
+        }
+        else if(player1 == MINMAX)
+        {
+            
+        }
+        else if(player1 == ABP)
+        {
+            
+        }
+        
+        
+        
+        
+    }//while game is playing
     
+    
+    return currB;
 }
 
 

@@ -49,8 +49,12 @@ int main(int argc, const char * argv[]) {
     WarWorld world;
     
     world.build(temp);
+<<<<<<< HEAD
     world.board.print();
 >>>>>>> 3d7d073b5a98f4962aea9df7f210da5b9797d47c
+=======
+    world.startGame();
+>>>>>>> 98240d359cd47685f3f37b53f3db9e2f3e158b1a
 
     return 0;
 }

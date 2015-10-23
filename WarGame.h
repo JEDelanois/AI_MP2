@@ -22,6 +22,9 @@
 #define MAXP 1
 #define MINP 2
 
+#define P1 1
+#define P2 2
+
 #define HUMAN 1
 #define MINMAX 2
 #define ABP 3
