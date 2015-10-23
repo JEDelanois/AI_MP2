@@ -86,7 +86,7 @@ public:
 private:
     //player 1 is blue and MAX  ----  player two in green and MIN
     //player represents what whos current turn it is
-    Board MinMax(Board currBoard, int player ,int currdepth, int finaldepth, int & total_expanded_nodes);
+    int MinMax(Board currBoard, int player ,int currdepth, int finaldepth, int & total_expanded_nodes);
     
 };
 

@@ -254,17 +254,32 @@ void WarWorld::build(int values[6][6])
 }
 
 
-Board WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, int & total_expanded_nodes)
+int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, int & total_expanded_nodes,int & selx, int & sely)
 {
     //if at final depth then return the board or end game
     if((currdepth == finaldepth) || (currBoard.getRemainingMoves() == 0))
     {
-        return currBoard;
+        total_expanded_nodes++;
+        return currBoard.eval();
     }
     
     
-    return currBoard;
-        
+    total_expanded_nodes++;
+    for(int y = 0; y < 6; y++)
+    {
+        for(int x = 0; x < 6; x++)
+        {
+            // if there is no pice place one there to see
+            if(currBoard.getPlayer(x, y) == NONE)
+            {
+                // call function and save x y
+            }
+                
+        }
+    }
+    
+    // pass back appropriate x y value and return proper value acording to min max
+    
 }
 
 
