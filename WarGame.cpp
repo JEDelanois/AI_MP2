@@ -146,8 +146,10 @@ int Board::getGreenScore()
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			if ((board[i][j]).getPlayer() == GREEN)
-				score += (board[i][j]).getVal();
+            if ((board[i][j]).getPlayer() == GREEN){
+                int temp = (board[i][j]).getVal();
+                score +=temp;
+            }
 		}
 	}
 
@@ -396,6 +398,8 @@ void WarWorld::startGame()
 Board WarWorld::game(int player1, int player2)
 {
     Board currB = board;
+    int p1expanded = 0;
+    int p2expanded = 0;
     while(currB.getRemainingMoves() > 0)
     {
         //make player one go first
@@ -427,6 +431,13 @@ Board WarWorld::game(int player1, int player2)
         }
         else if(player1 == MINMAX)
         {
+            int x = -7;
+            int y = -7;
+            
+            MinMax(currB, P1, 0, 4, p1expanded, x, y);
+            currB.move(P1, x, y);
+            currB.print();
+            cout << "MinMax BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
         
         }
         else if(player1 == ABP)
@@ -465,11 +476,18 @@ Board WarWorld::game(int player1, int player2)
                 x = y = -1; //if there is an error these need to be negative
             }
         }
-        else if(player1 == MINMAX)
+        else if(player2 == MINMAX)
         {
+            int x = -7;
+            int y = -7;
+            
+            MinMax(currB, P2, 0, 4, p2expanded, x, y);
+            currB.move(P2, x, y);
+            currB.print();
+            cout << "MinMax GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
-        else if(player1 == ABP)
+        else if(player2 == ABP)
         {
             
         }
