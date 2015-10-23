@@ -528,9 +528,26 @@ void WarWorld::startGame()
     
     //print our the final board
     temp.print();
+    cout << endl;
     
-    cout << "Player 1 Blue \tScore: " << temp.getBlueScore() << "\tNodes: " << exp1 << endl;
-    cout << "Player 2 Green \tScore: " << temp.getGreenScore() << "\tNodes: " << exp2 << endl;
+    
+    if(p1type == HUMAN)
+        cout << "Human\t\t";
+    else if(p1type == MINMAX)
+        cout << "MinMax\t\t";
+    else if(p1type == ABP)
+        cout << "AlphaBeta\t";
+    
+    cout << "Player-1-Blue \tScore: " << temp.getBlueScore() << "\t\tNodes: " << exp1 << endl << endl;
+    
+    if(p2type == HUMAN)
+        cout << "Human\t\t";
+    else if(p2type == MINMAX)
+        cout << "MinMax\t\t";
+    else if(p2type == ABP)
+        cout << "AlphaBeta\t";
+    
+    cout << "Player-2-Green \tScore: " << temp.getGreenScore() << "\t\tNodes: " << exp2 << endl << endl;
     
     
     if(temp.eval() > 0)
@@ -600,7 +617,7 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             AlphaBeta(currB, P1, 0, 4, p1expanded, x, y,0,false);
             currB.move(P1, x, y);
             currB.print();
-            cout << "MinMax BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
+            cout << "AlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
         
@@ -654,7 +671,7 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             AlphaBeta(currB, P2, 0, 4, p2expanded, x, y,0,false);
             currB.move(P2, x, y);
             currB.print();
-            cout << "MinMax GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
+            cout << "AlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
         
