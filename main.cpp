@@ -19,6 +19,8 @@ int main(int argc, const char * argv[]) {
 
 
     CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+    
+    cst.LetterSearch();
 	//CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob3.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
 
     //cout << temp.parameters.data.printAll() << endl << endl;
@@ -40,7 +42,7 @@ int main(int argc, const char * argv[]) {
 
     int temp[6][6];
     
-    srand(3);
+    srand(303);
 
     
     for(int x = 0; x<6; x++)

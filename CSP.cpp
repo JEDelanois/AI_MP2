@@ -438,14 +438,16 @@ void CSTworld::lettersearch(string currS, int idx)
     //get vector of all categories that shar that intex
     vector<string> cats = parameters.retCategory(idx);
     string asdf = cats[0];
+    int matches =0;
     // for letters possible for that index
     for(char chr = 'A'; chr <= 'Z'; chr++)
     {
         currS[idx] = chr;
-        
+        int flag = 0;
         //for all categories associated with this index
         for(int a = 0; a < cats.size(); a++)
         {
+            
             //get the associated list of words
             vector<string> * curList = &parameters.data[ cats[a] ];
             
@@ -460,11 +462,20 @@ void CSTworld::lettersearch(string currS, int idx)
                     ((currS[parameters[cats[a]].idxs[1]] == (*curList)[i][1]) || (currS[parameters[cats[a]].idxs[1]] == ' ') ) &&
                     ((currS[parameters[cats[a]].idxs[2]] == (*curList)[i][2]) || (currS[parameters[cats[a]].idxs[2]] == ' ') ) )
                 {
-                    //call for next iteration
-                    lettersearch(currS, idx + 1);
+                    if(flag == 0)
+                    {
+                        matches++;
+                        flag = 1;
+                    }
                 }
                 //else letter doesnt fit so move on to next possible word or letter
             }
+        }
+        
+        if(matches == cats.size())// if there is atleas one match in every category then pass it on
+        {
+            //call for next iteration
+            lettersearch(currS, idx + 1);
         }
         
         

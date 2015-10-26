@@ -29,6 +29,7 @@
 #define HUMAN 1
 #define MINMAX 2
 #define ABP 3
+#define CHANCEAB 4
 
 
 class Boardnode
@@ -69,7 +70,7 @@ public:
     int move(int player, int x, int y);
     void flipPlayer(int x, int y);
     void print();
-    
+    int moveChance(int player, int x, int y);
     
     //evaluation function for the current game state blue - green
     int eval();

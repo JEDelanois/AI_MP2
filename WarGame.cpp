@@ -255,6 +255,43 @@ int Board::move(int player, int x, int y)
 }
 
 
+int Board::moveChance(int player, int x, int y)
+{
+    //if space is already taken then return
+    if( (board[x][y].getPlayer() != 0) ||(x > 5 )||(x < 0) ||(y > 5 )||(y < 0))
+        return -1;
+    
+    //else in empty space sp place coresponding player there
+    changePlayer(player, x, y);
+    
+    
+    if(rand() % 2== 0)
+    {
+        //if there is a player on the same team around
+        if((getPlayer(x-1, y) == player)||(getPlayer(x, y-1) == player)||(getPlayer(x+1, y) == player)||(getPlayer(x, y+1) == player))
+        {
+            //flip other oponent pieces
+            if( (getPlayer(x-1, y) != NONE )&& (getPlayer(x-1, y) != OUT) && (getPlayer(x-1, y) != player) )
+                flipPlayer(x-1,y);
+            
+            if( (getPlayer(x+1, y) != NONE )&& (getPlayer(x+1, y) != OUT) && (getPlayer(x+1, y) != player) )
+                flipPlayer(x+1,y);
+            
+            if( (getPlayer(x, y-1) != NONE )&& (getPlayer(x, y-1) != OUT) && (getPlayer(x, y-1) != player) )
+                flipPlayer(x,y-1);
+            
+            if( (getPlayer(x, y+1) != NONE )&& (getPlayer(x, y+1) != OUT) && (getPlayer(x, y+1) != player) )
+                flipPlayer(x,y+1);
+            
+        }
+    }
+    
+    
+    
+    return 1;
+}
+
+
 
 void WarWorld::build(int values[6][6])
 {
@@ -509,9 +546,9 @@ void WarWorld::startGame()
     time1 = time2 = 0;
     while(p1type < 0)
     {
-        cout << "Enter player 1 type (Enter: 1-human  2-MinMax  3-AlphaBeta)" << endl;
+        cout << "Enter player 1 type (Enter: 1-human  2-MinMax  3-AlphaBeta 4-ChanceAB)" << endl;
         cin >> p1type;
-        if ((p1type) < 1 || (p1type > 3))
+        if ((p1type) < 1 || (p1type > 4))
             p1type = -1;
     }
     
@@ -519,9 +556,9 @@ void WarWorld::startGame()
     int p2type = -1;
     while(p2type < 0)
     {
-        cout << "Enter player 2 type (Enter: 1-human  2-MinMax  3-AlphaBeta)" << endl;
+        cout << "Enter player 2 type (Enter: 1-human  2-MinMax  3-AlphaBeta 4-ChanceAB)" << endl;
         cin >> p2type;
-        if ((p2type) < 1 || (p2type > 3))
+        if ((p2type) < 1 || (p2type > 4))
             p2type = -1;
     }
     
@@ -625,6 +662,17 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             cout << "AlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
+        else if(player1 == CHANCEAB)
+        {
+            int x = -7;
+            int y = -7;
+            
+            AlphaBeta(currB, P1, 0, 4, p1expanded, x, y,0,false);
+            currB.moveChance(P1, x, y);
+            currB.print();
+            cout << "CAlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
+            
+        }
         time1 += ((float)clock() - (float)temp1) / CLOCKS_PER_SEC;
         
         
@@ -677,6 +725,17 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             currB.move(P2, x, y);
             currB.print();
             cout << "AlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
+            
+        }
+        else if(player2 == CHANCEAB)
+        {
+            int x = -7;
+            int y = -7;
+            
+            AlphaBeta(currB, P2, 0, 4, p2expanded, x, y,0,false);
+            currB.moveChance(P2, x, y);
+            currB.print();
+            cout << "CAlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
         time2 += ((float)clock() - (float)temp2) / CLOCKS_PER_SEC;
