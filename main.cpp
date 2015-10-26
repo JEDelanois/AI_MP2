@@ -20,14 +20,21 @@ int main(int argc, const char * argv[]) {
 
 
 
-    //CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
-    //cst.WordSearch();
 
+   // CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob2.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+   CSTworld cst("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob2.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
     
-   
-	CSTworld cst("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob2.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
+    cst.WordSearch();
+    
+    cout << endl <<endl << endl;
+    
+    cst.LetterSearch();
+    
+    
 	
-	cst.WordSearch();
+	
+
+	
 
     //cout << temp.parameters.data.printAll() << endl << endl;
     

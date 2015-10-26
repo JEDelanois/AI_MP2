@@ -420,7 +420,7 @@ void CSTworld::lettersearch(string currS, int idx)
     //root check
     if(idx == -1 )
     {
-        cout << "root" ;
+        cout << "root"<< endl ;
         //call for first letter
         lettersearch(currS, idx +1);
         return;
@@ -429,14 +429,14 @@ void CSTworld::lettersearch(string currS, int idx)
     int size = (int)currS.size();
     if(idx >= size)
     {
-        string tabs = "";
+        string s = "\t";
         
-        //get number of tabs needed
-        for(int a = 0; a < idx + 2; a++)
-            tabs += "\t";
-        
-        cout << "(found result: " << currS << ")" << endl << tabs;
-        tabs = "";
+        for(int i = 0; i < (int)currS.length(); i++)
+        {
+            s += " -> ";
+            s.push_back(currS[i]);
+        }
+        cout << s <<  " (found result: " << currS << ")" << endl;
         return;
     }
 
@@ -445,7 +445,6 @@ void CSTworld::lettersearch(string currS, int idx)
     vector<string> cats = parameters.retCategory(idx);
     string asdf = cats[0];
     int matches = 0;
-    int number = cats.size();
     // for letters possible for that index
     for(char chr = 'A'; chr <= 'Z'; chr++)
     {
@@ -494,6 +493,8 @@ void CSTworld::lettersearch(string currS, int idx)
             //call for next iteration
             lettersearch(currS, idx + 1);
         }
+        
+        
         matches = 0;
         
         
