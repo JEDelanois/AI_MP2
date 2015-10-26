@@ -8,6 +8,7 @@
 
 #include "WarGame.h"
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
@@ -505,6 +506,7 @@ int WarWorld::AlphaBeta(Board currBoard,int player ,int currdepth, int finaldept
 void WarWorld::startGame()
 {
     int p1type = -1;
+    time1 = time2 = 0;
     while(p1type < 0)
     {
         cout << "Enter player 1 type (Enter: 1-human  2-MinMax  3-AlphaBeta)" << endl;
@@ -540,7 +542,7 @@ void WarWorld::startGame()
     else if(p1type == ABP)
         cout << "AlphaBeta\t";
     
-    cout << "Player-1-Blue \tScore: " << temp.getBlueScore() << "\t\tNodes: " << exp1 << endl << endl;
+    cout << "Player-1-Blue \tScore: " << temp.getBlueScore() << "\t\tNodes: " << exp1 << "\tTime/move " << time1 <<endl << endl;
     
     if(p2type == HUMAN)
         cout << "Human\t\t";
@@ -549,7 +551,7 @@ void WarWorld::startGame()
     else if(p2type == ABP)
         cout << "AlphaBeta\t";
     
-    cout << "Player-2-Green \tScore: " << temp.getGreenScore() << "\t\tNodes: " << exp2 << endl << endl;
+    cout << "Player-2-Green \tScore: " << temp.getGreenScore() << "\t\tNodes: " << exp2<< "\tTime/move " << time2  << endl << endl;
     
     
     if(temp.eval() > 0)
@@ -573,6 +575,7 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
     Board currB = board;
     while(currB.getRemainingMoves() > 0)
     {
+        clock_t temp1 = clock();
         //make player one go first
         if(player1 == HUMAN)
         {
@@ -622,12 +625,12 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             cout << "AlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
+        time1 += ((float)clock() - (float)temp1) / CLOCKS_PER_SEC;
         
         
         
         
-        
-        
+        clock_t temp2 = clock();
         //player 2 moves
         if(player2 == HUMAN)
         {
@@ -676,6 +679,7 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             cout << "AlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
             
         }
+        time2 += ((float)clock() - (float)temp2) / CLOCKS_PER_SEC;
         
         
         

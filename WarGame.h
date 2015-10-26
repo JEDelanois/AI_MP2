@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <time.h>
 
 #endif /* defined(__AI_MP2__WarGame__) */
 
@@ -91,6 +92,8 @@ public:
     void startGame();
     
 private:
+    float time1;
+    float time2;
     Board game(int player1, int player2, int & p1expanded, int & p2expanded);
     
     
