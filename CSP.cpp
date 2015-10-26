@@ -420,9 +420,11 @@ void CSTworld::lettersearch(string currS, int idx)
         cout << "root" ;
         //call for first letter
         lettersearch(currS, idx +1);
+        return;
     }
     
-    if(idx >= currS.size())
+    int size = (int)currS.size();
+    if(idx >= size)
     {
         string tabs = "";
         
@@ -431,6 +433,7 @@ void CSTworld::lettersearch(string currS, int idx)
             tabs += "\t";
         
         cout << "(found result: " << currS << ")" << endl << tabs;
+        tabs = "";
         return;
     }
 
@@ -438,11 +441,14 @@ void CSTworld::lettersearch(string currS, int idx)
     //get vector of all categories that shar that intex
     vector<string> cats = parameters.retCategory(idx);
     string asdf = cats[0];
-    int matches =0;
+    int matches = 0;
+    int number = cats.size();
     // for letters possible for that index
     for(char chr = 'A'; chr <= 'Z'; chr++)
     {
+        
         currS[idx] = chr;
+        
         int flag = 0;
         //for all categories associated with this index
         for(int a = 0; a < cats.size(); a++)
@@ -457,7 +463,13 @@ void CSTworld::lettersearch(string currS, int idx)
                 //make sure all spaces are either matching or blank
                 char z = currS[parameters[cats[a]].idxs[0]];
                 char b = (*curList)[i][0];
+                string currW = (*curList)[i];
                 string temp1 =(*curList)[i];
+                
+                if(currW == "EYE" && currS[0] == 'N')
+                {
+                    z++;
+                }
                 if( ((currS[parameters[cats[a]].idxs[0]] == (*curList)[i][0]) || (currS[parameters[cats[a]].idxs[0]] == ' ') ) &&
                     ((currS[parameters[cats[a]].idxs[1]] == (*curList)[i][1]) || (currS[parameters[cats[a]].idxs[1]] == ' ') ) &&
                     ((currS[parameters[cats[a]].idxs[2]] == (*curList)[i][2]) || (currS[parameters[cats[a]].idxs[2]] == ' ') ) )
@@ -470,13 +482,17 @@ void CSTworld::lettersearch(string currS, int idx)
                 }
                 //else letter doesnt fit so move on to next possible word or letter
             }
+            flag = 0;
         }
         
-        if(matches == cats.size())// if there is atleas one match in every category then pass it on
+        int t2 = (int)cats.size();
+        if(matches == t2)// if there is atleas one match in every category then pass it on
         {
             //call for next iteration
             lettersearch(currS, idx + 1);
         }
+        matches = 0;
+        
         
         
     }

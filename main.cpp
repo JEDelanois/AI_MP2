@@ -19,6 +19,7 @@ int main(int argc, const char * argv[]) {
 
 
     CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+    cst.WordSearch();
     
     cst.LetterSearch();
 	//CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob3.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
@@ -55,9 +56,9 @@ int main(int argc, const char * argv[]) {
     }
     WarWorld world;
     
-    world.build(temp);
+    //world.build(temp);
 
-    world.startGame();
+    //world.startGame();
 	//int a;
 	//cin >> a;
 
