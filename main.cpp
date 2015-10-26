@@ -13,21 +13,21 @@
 
 
 int main(int argc, const char * argv[]) {
-   // CSTworld temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+    CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
     
     
-    //cout << temp.parameters.data.printAll() << endl << endl;
+    //cout << cst.parameters.data.printAll() << endl << endl;
     
-   // temp.parameters.print();
+   // cst.parameters.print();
     //
     //cout << endl <<endl << endl;
     
 
-    //temp.LetterSearch();
+    //cst.LetterSearch();
     
     //create random board
     int temp[6][6];
-    srand(43);
+    srand(3);
     
     for(int x = 0; x<6; x++)
     {
