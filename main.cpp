@@ -7,39 +7,58 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "CSP.h"
 #include "WarGame.h"
 
 
 
+
 int main(int argc, const char * argv[]) {
+
+
     CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+	//CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob3.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
+
+    //cout << temp.parameters.data.printAll() << endl << endl;
     
+    //temp.parameters.print();
     
-    //cout << cst.parameters.data.printAll() << endl << endl;
-    
-   // cst.parameters.print();
-    //
     //cout << endl <<endl << endl;
     
+	//temp.WordSearch();
+   // temp.LetterSearch();
 
-    //cst.LetterSearch();
     
     //create random board
+
+	ifstream mapfile;
+
+	//CHANGE YOUR PATH HERE
+	//mapfile.open("C:/Users/Dallas/Documents/CS 440/AI_MP2/Maps/Narvik.txt");
+
     int temp[6][6];
+    
     srand(3);
+
     
     for(int x = 0; x<6; x++)
     {
         for(int y = 0; y<6; y++)
         {
-            temp[x][y] = rand()%100;
+           temp[x][y] = rand()%100;
+		//mapfile >> temp[x][y];		//reads in given board
         }
     }
     WarWorld world;
     
     world.build(temp);
-    world.startGame();
 
+    world.startGame();
+	//int a;
+	//cin >> a;
+
+	//mapfile.close();
     return 0;
 }

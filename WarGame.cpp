@@ -102,12 +102,13 @@ Board& Board::operator=(const Board &other)
 
     return *this;
 
+
 }
 
 
 int Board::getVal(int x, int y)
 {
-	return (board[x][y]).getVal();
+	return board[x][y].getVal();
 }
 
 int Board::getRemainingMoves()
