@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <vector>
+#include <time.h>
 
 #endif /* defined(__AI_MP2__WarGame__) */
 
@@ -29,6 +30,7 @@
 #define HUMAN 1
 #define MINMAX 2
 #define ABP 3
+#define CHANCEAB 4
 
 
 
@@ -70,7 +72,7 @@ public:
     int move(int player, int x, int y);
     void flipPlayer(int x, int y);
     void print();
-    
+    int moveChance(int player, int x, int y);
     
     //evaluation function for the current game state blue - green
     int eval();
@@ -94,6 +96,8 @@ public:
 	float time_p1, time_p2;
     
 private:
+    float time1;
+    float time2;
     Board game(int player1, int player2, int & p1expanded, int & p2expanded);
     
     

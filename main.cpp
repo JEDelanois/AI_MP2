@@ -17,17 +17,24 @@
 
 
 int main(int argc, const char * argv[]) {
-    //CSTworld temp( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
-	//CSTworld temp("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob3.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
+
+
+    //CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+    
+   
+	CSTworld cst("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob3.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
+	
+	cst.WordSearch();
 
     //cout << temp.parameters.data.printAll() << endl << endl;
     
     //temp.parameters.print();
     
-    cout << endl <<endl << endl;
+    //cout << endl <<endl << endl;
     
 	//temp.WordSearch();
    // temp.LetterSearch();
+
     
     //create random board
 
@@ -37,7 +44,10 @@ int main(int argc, const char * argv[]) {
 	mapfile.open("C:/Users/Dallas/Documents/CS 440/AI_MP2/Maps/Narvik.txt");
 
     int temp[6][6];
-    //srand(43);
+
+    
+    srand(303);
+
 
     
     for(int x = 0; x<6; x++)
@@ -54,7 +64,7 @@ int main(int argc, const char * argv[]) {
 
 	clock_t time;
 	time = clock();	//value of clock
-    world.startGame();
+    //world.startGame();
 	time = clock() - time;	//difference gives us execution time of game
 	time = (float)(time/CLOCKS_PER_SEC);
 	cout << "time: " << time << endl;
