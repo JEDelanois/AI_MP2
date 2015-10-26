@@ -292,6 +292,9 @@ void CSTworld::WordSearch()
     wordsearch(s,-1);
 }
 
+//This function does the word search and prints the word trace
+//inputs: current solution array and the category index to search
+//outpus: none
 void CSTworld::wordsearch(string currS,int ctgryIndx)
 {
     //error check
