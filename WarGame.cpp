@@ -271,7 +271,7 @@ void WarWorld::build(int values[6][6])
  */
 int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, int & total_expanded_nodes,int & selx, int & sely)
 {
-    
+
     //if at final depth then return the board or end game
     if((currdepth == finaldepth) || (currBoard.getRemainingMoves() == 0))
     {
@@ -311,7 +311,6 @@ int WarWorld::MinMax(Board currBoard,int player ,int currdepth, int finaldepth, 
                 //only care about these in the game not in any of the recursive min max calls
                 int tx = 0;
                 int ty = 0;
-                
                 MinMaxvals.push_back( MinMax(temp, tplayer, currdepth +1, finaldepth, total_expanded_nodes, tx, ty) );
             }
                 
@@ -505,6 +504,8 @@ int WarWorld::AlphaBeta(Board currBoard,int player ,int currdepth, int finaldept
 void WarWorld::startGame()
 {
     int p1type = -1;
+	time_p1 = 0;	//initialize timers
+	time_p2 = 0;
     while(p1type < 0)
     {
         cout << "Enter player 1 type (Enter: 1-human  2-MinMax  3-AlphaBeta)" << endl;
@@ -540,7 +541,7 @@ void WarWorld::startGame()
     else if(p1type == ABP)
         cout << "AlphaBeta\t";
     
-    cout << "Player-1-Blue \tScore: " << temp.getBlueScore() << "\t\tNodes: " << exp1 << endl << endl;
+    cout << "Player-1-Blue \tScore: " << temp.getBlueScore() << "\t\tNodes: " << exp1 << "Average time per move: " << (time_p1/18) << endl << endl;
     
     if(p2type == HUMAN)
         cout << "Human\t\t";
@@ -549,7 +550,7 @@ void WarWorld::startGame()
     else if(p2type == ABP)
         cout << "AlphaBeta\t";
     
-    cout << "Player-2-Green \tScore: " << temp.getGreenScore() << "\t\tNodes: " << exp2 << endl << endl;
+    cout << "Player-2-Green \tScore: " << temp.getGreenScore() << "\t\tNodes: " << exp2 << "\n Average time per move: " << (time_p2/18)  << endl << endl;
     
     
     if(temp.eval() > 0)
@@ -565,6 +566,7 @@ void WarWorld::startGame()
         cout << " Tie Game :(" << endl;
     }
 
+
 }
 
 
@@ -573,6 +575,7 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
     Board currB = board;
     while(currB.getRemainingMoves() > 0)
     {
+		float temptime = clock();
         //make player one go first
         if(player1 == HUMAN)
         {
@@ -604,6 +607,7 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
         {
             int x = -7;
             int y = -7;
+			
             
             MinMax(currB, P1, 0, 4, p1expanded, x, y);
             currB.move(P1, x, y);
@@ -623,11 +627,11 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             
         }
         
+		time_p1 += (float)((clock() - temptime)/ CLOCKS_PER_SEC);
         
         
         
-        
-        
+		temptime = clock();
         //player 2 moves
         if(player2 == HUMAN)
         {
@@ -678,7 +682,7 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
         }
         
         
-        
+		time_p2 += (float)((clock() - temptime) / CLOCKS_PER_SEC);
         
     }//while game is playing
     

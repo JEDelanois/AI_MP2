@@ -10,6 +10,7 @@
 #define __AI_MP2__WarGame__
 
 #include <stdio.h>
+#include <time.h>
 #include <vector>
 
 #endif /* defined(__AI_MP2__WarGame__) */
@@ -28,6 +29,7 @@
 #define HUMAN 1
 #define MINMAX 2
 #define ABP 3
+
 
 
 class Boardnode
@@ -89,6 +91,7 @@ public:
     Board board;
     void build(int values[6][6]);
     void startGame();
+	float time_p1, time_p2;
     
 private:
     Board game(int player1, int player2, int & p1expanded, int & p2expanded);

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <time.h>
 #include "CSP.h"
 #include "WarGame.h"
 
@@ -33,28 +34,33 @@ int main(int argc, const char * argv[]) {
 	ifstream mapfile;
 
 	//CHANGE YOUR PATH HERE
-	//mapfile.open("C:/Users/Dallas/Documents/CS 440/AI_MP2/Maps/Narvik.txt");
+	mapfile.open("C:/Users/Dallas/Documents/CS 440/AI_MP2/Maps/Narvik.txt");
 
     int temp[6][6];
-    srand(43);
+    //srand(43);
 
     
     for(int x = 0; x<6; x++)
     {
         for(int y = 0; y<6; y++)
         {
-           temp[x][y] = rand()%100;
-		//mapfile >> temp[x][y];		//reads in given board
+          // temp[x][y] = rand()%100;
+		mapfile >> temp[x][y];		//reads in given board
         }
     }
     WarWorld world;
     
     world.build(temp);
 
+	clock_t time;
+	time = clock();	//value of clock
     world.startGame();
-	//int a;
-	//cin >> a;
+	time = clock() - time;	//difference gives us execution time of game
+	time = (float)(time/CLOCKS_PER_SEC);
+	cout << "time: " << time << endl;
+	int a;
+	cin >> a;
 
-	//mapfile.close();
+	mapfile.close();
     return 0;
 }
