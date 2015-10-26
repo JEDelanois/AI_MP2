@@ -19,7 +19,12 @@
 int main(int argc, const char * argv[]) {
 
 
+<<<<<<< HEAD
     //CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+=======
+    CSTworld cst( "/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/CSTproblems/prob1.txt" ,"/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/wordlists/");
+    cst.WordSearch();
+>>>>>>> 978d8d4b06eced148dd8261f4278d311248598a3
     
    
 	CSTworld cst("C:/Users/Dallas/Documents/CS 440/AI_MP2/CSTproblems/prob3.txt", "C:/Users/Dallas/Documents/CS 440/AI_MP2/wordlists/");
@@ -60,16 +65,13 @@ int main(int argc, const char * argv[]) {
     }
     WarWorld world;
     
-    world.build(temp);
+    //world.build(temp);
 
-	clock_t time;
-	time = clock();	//value of clock
+
     //world.startGame();
-	time = clock() - time;	//difference gives us execution time of game
-	time = (float)(time/CLOCKS_PER_SEC);
-	cout << "time: " << time << endl;
-	int a;
-	cin >> a;
+	//int a;
+	//cin >> a;
+
 
 	mapfile.close();
     return 0;
