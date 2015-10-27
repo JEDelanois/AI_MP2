@@ -92,7 +92,7 @@ public:
     WarWorld(){}
     Board board;
     void build(int values[6][6]);
-    void startGame();
+    Board startGame();
 	float time_p1, time_p2;
     
 private:

@@ -590,7 +590,7 @@ int WarWorld::AlphaBeta(Board currBoard,int player ,int currdepth, int finaldept
 //This is the function used to start the game. It reads in the players (human, minimax, alpha-beta, chance) and calls another function that allows agents to actually play the game
 //inputs: none
 //outpus: none
-void WarWorld::startGame()
+Board WarWorld::startGame()
 {
     int p1type = -1;
 
@@ -660,6 +660,7 @@ void WarWorld::startGame()
         cout << " Tie Game :(" << endl;
     }
 
+    return temp;
 
 }
 

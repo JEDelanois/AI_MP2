@@ -16,7 +16,21 @@
 
 
 
-
+void fillArray(string path, int temp[6][6])
+{
+    ifstream mapfile;
+    mapfile.open(path);
+    
+    for(int x = 0; x<6; x++)
+    {
+        for(int y = 0; y<6; y++)
+        {
+            
+            mapfile >> temp[x][y];		//reads in given board
+        }
+    }
+    mapfile.close();
+}
 
 
 
@@ -55,36 +69,34 @@ int main(int argc, const char * argv[]) {
     
     //create random board
 
-	ifstream mapfile;
 
 	//CHANGE YOUR PATH HERE
 	//mapfile.open("C:/Users/Dallas/Documents/CS 440/AI_MP2/Maps/Narvik.txt");
 
+    
+    
     int temp[6][6];
 
     
-    srand(303);
-
-
     
-    for(int x = 0; x<6; x++)
-    {
-        for(int y = 0; y<6; y++)
-        {
-          // temp[x][y] = rand()%100;
-		mapfile >> temp[x][y];		//reads in given board
-        }
-    }
     WarWorld world;
+
+    for (int i = 0; i < 5; i++)
+    {
+        <#statements#>
+    }
     
-    //world.build(temp);
+    world.build(temp);
 
 
-    //world.startGame();
-	int a;
+    world.startGame();
+	
+    
+    
+    
+    int a;
 	cin >> a;
 
 
-	mapfile.close();
     return 0;
 }
