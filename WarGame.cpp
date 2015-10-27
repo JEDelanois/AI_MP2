@@ -590,9 +590,13 @@ int WarWorld::AlphaBeta(Board currBoard,int player ,int currdepth, int finaldept
 //This is the function used to start the game. It reads in the players (human, minimax, alpha-beta, chance) and calls another function that allows agents to actually play the game
 //inputs: none
 //outpus: none
-Board WarWorld::startGame()
+Board WarWorld::startGame(int p1type, int p2type,bool Psteps)
 {
-    int p1type = -1;
+    if(p1type < 1 || p1type > 4)
+        p1type = -1;
+    
+    if(p2type < 1 || p2type > 4)
+        p2type = -1;
 
     time1 = time2 = 0;
 
@@ -605,7 +609,7 @@ Board WarWorld::startGame()
     }
     
     
-    int p2type = -1;
+    
     while(p2type < 0)
     {
         cout << "Enter player 2 type (Enter: 1-human  2-MinMax  3-AlphaBeta 4-ChanceAB)" << endl;
@@ -616,7 +620,7 @@ Board WarWorld::startGame()
     
     int exp1 =0;
     int exp2 =0;
-    Board temp = game(p1type,p2type,exp1,exp2);
+    Board temp = game(p1type,p2type,exp1,exp2,Psteps);
     
     //print our the final board
     cout << "_____________________________________________" << endl << "FINAL GAME STATE" << endl << endl;
@@ -630,9 +634,11 @@ Board WarWorld::startGame()
         cout << "MinMax\t\t";
     else if(p1type == ABP)
         cout << "AlphaBeta\t";
+    else if(p1type == CHANCEAB)
+        cout << "AlphaBetaFlip\t";
     
 
-    cout << "Player-1-Blue \tScore: " << temp.getBlueScore() << "\t\tNodes: " << exp1 << "\tTime/move " << time1/18 <<endl << endl;
+    cout << "Player-1-Blue \tScore: " << temp.getBlueScore() << "\t\tNodes/move: " << exp1/18 << "\tTime/move " << time1/18 <<endl << endl;
 
     
     if(p2type == HUMAN)
@@ -641,9 +647,11 @@ Board WarWorld::startGame()
         cout << "MinMax\t\t";
     else if(p2type == ABP)
         cout << "AlphaBeta\t";
+    else if(p2type == CHANCEAB)
+        cout << "AlphaBetaFlip\t";
     
 
-    cout << "Player-2-Green \tScore: " << temp.getGreenScore() << "\t\tNodes: " << exp2<< "\tTime/move " << time2/18  << endl << endl;
+    cout << "Player-2-Green \tScore: " << temp.getGreenScore() << "\t\tNodes/move: " << exp2/18<< "\tTime/move " << time2/18  << endl << endl;
 
     
     
@@ -667,7 +675,7 @@ Board WarWorld::startGame()
 //This function allows each agent to take turns playing the game. The function used to evaluate each move is agent-dependent
 //inputs: each player and how many nodes each has expanded
 //outpus: a new board including the most recent move
-Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expanded)
+Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expanded, bool Psteps)
 {
     Board currB = board;
     while(currB.getRemainingMoves() > 0)
@@ -708,10 +716,12 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             int y = -7;
 			
             
-            MinMax(currB, P1, 0, 4, p1expanded, x, y);
+            MinMax(currB, P1, 0, MMDEPTH, p1expanded, x, y);
             currB.move(P1, x, y);
-            currB.print();
-            cout << "MinMax BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
+            if(Psteps){
+                currB.print();
+                cout << "MinMax BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
+            }
         
         }
         else if(player1 == ABP)
@@ -719,10 +729,12 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             int x = -7;
             int y = -7;
             
-            AlphaBeta(currB, P1, 0, 4, p1expanded, x, y,0,false);
+            AlphaBeta(currB, P1, 0, ABPDEPTH, p1expanded, x, y,0,false);
             currB.move(P1, x, y);
-            currB.print();
-            cout << "AlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
+            if(Psteps){
+                currB.print();
+                cout << "AlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
+            }
             
         }
         else if(player1 == CHANCEAB)
@@ -732,8 +744,10 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             
             AlphaBeta(currB, P1, 0, 4, p1expanded, x, y,0,false);
             currB.moveChance(P1, x, y);
-            currB.print();
-            cout << "CAlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
+            if(Psteps){
+                currB.print();
+                cout << "CAlphaBeta BLUE moved to location X: " << x << "  Y: " << y << endl << endl;
+            }
             
         }
         time1 += ((float)clock() - (float)temp1) / CLOCKS_PER_SEC;
@@ -774,10 +788,12 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             int x = -7;
             int y = -7;
             
-            MinMax(currB, P2, 0, 4, p2expanded, x, y);
+            MinMax(currB, P2, 0, MMDEPTH, p2expanded, x, y);
             currB.move(P2, x, y);
+            if(Psteps){
             currB.print();
             cout << "MinMax GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
+            }
             
         }
         else if(player2 == ABP)
@@ -785,10 +801,13 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             int x = -7;
             int y = -7;
             
-            AlphaBeta(currB, P2, 0, 4, p2expanded, x, y,0,false);
+            AlphaBeta(currB, P2, 0, ABPDEPTH, p2expanded, x, y,0,false);
             currB.move(P2, x, y);
-            currB.print();
-            cout << "AlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
+            if(Psteps)
+            {
+                currB.print();
+                cout << "AlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
+            }
             
         }
         else if(player2 == CHANCEAB)
@@ -798,8 +817,10 @@ Board WarWorld::game(int player1, int player2, int & p1expanded, int & p2expande
             
             AlphaBeta(currB, P2, 0, 4, p2expanded, x, y,0,false);
             currB.moveChance(P2, x, y);
-            currB.print();
-            cout << "CAlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
+            if(Psteps){
+                currB.print();
+                cout << "CAlphaBeta GREEN moved to location X: " << x << "  Y: " << y << endl << endl;
+            }
             
         }
         time2 += ((float)clock() - (float)temp2) / CLOCKS_PER_SEC;

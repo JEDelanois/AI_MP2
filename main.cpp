@@ -33,6 +33,21 @@ void fillArray(string path, int temp[6][6])
 }
 
 
+void fillArrayRand(string path, int temp[6][6])
+{
+    srand((unsigned int)clock());
+    
+    for(int x = 0; x<6; x++)
+    {
+        for(int y = 0; y<6; y++)
+        {
+            
+            temp[x][y] = rand()%100;		//reads in given board
+        }
+    }
+    
+}
+
 
 
 int main(int argc, const char * argv[]) {
@@ -80,22 +95,45 @@ int main(int argc, const char * argv[]) {
     
     
     WarWorld world;
+    
+    vector<string> maps;
+    maps.push_back("/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/Maps/Keren.txt");
+    maps.push_back("/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/Maps/Narvik.txt");
+    maps.push_back("/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/Maps/Sevastopol.txt");
+    maps.push_back("/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/Maps/Smolensk.txt");
+    maps.push_back("/Users/Erik/Documents/School/AI/AI_MP2/AI_MP2/Maps/Westerplatte.txt");
+    
+    vector<Board> sols;
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < (int)maps.size(); i++)
     {
-        <#statements#>
+    
+        fillArrayRand(maps[i],temp);
+        
+        
+        world.build(temp);
+/*
+        if(i == 0)
+            cout <<"Map Keren:" << endl;
+        if(i == 1)
+            cout <<"Map Narvik:" << endl;
+        if(i == 2)
+            cout <<"Map Sevastopol:" << endl;
+        if(i == 3)
+            cout <<"Map Smolensk:" << endl;
+        if(i == 4)
+            cout <<"Map Westerplatte:" << endl;
+*/
+        sols.push_back( world.startGame(4,4,false)) ;
+        
+        cout << endl << endl << endl;
+	
     }
     
-    world.build(temp);
-
-
-    world.startGame();
-	
     
     
-    
-    int a;
-	cin >> a;
+    //int a;
+	//cin >> a;
 
 
     return 0;

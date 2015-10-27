@@ -32,6 +32,8 @@
 #define ABP 3
 #define CHANCEAB 4
 
+#define MMDEPTH 3
+#define ABPDEPTH 4
 
 
 class Boardnode
@@ -92,13 +94,13 @@ public:
     WarWorld(){}
     Board board;
     void build(int values[6][6]);
-    Board startGame();
+    Board startGame(int p1type, int p2type,bool Psteps );// enter -1 for p1 and p2 to prompt user for player types
 	float time_p1, time_p2;
     
 private:
     float time1;
     float time2;
-    Board game(int player1, int player2, int & p1expanded, int & p2expanded);
+    Board game(int player1, int player2, int & p1expanded, int & p2expanded,bool Psteps);
     
     
     //player 1 is blue and MAX  ----  player two in green and MIN
